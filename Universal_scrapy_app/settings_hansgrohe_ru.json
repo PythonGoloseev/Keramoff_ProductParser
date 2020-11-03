@@ -1,0 +1,96 @@
+{
+    "__Add_spider_settings__": {
+        "start_url_list": [
+            "https://shop.hansgrohe.ru"
+        ],
+        "result_catalog": "c:\\\\inetpub\\wwwroot\\Static_Default_Site\\parse\\hansgrohe_ru",
+        "comment": "hansgrohe_ru_2020-09-14",
+        "version": "1.0.0",
+
+        "login_required": false,
+        "login_url": "https://www.sitename.ru/opt/",
+        "login_formdata": {"USER_LOGIN": "",
+                      "USER_PASSWORD": "",
+                      "backurl": "",
+                      "AUTH_FORM": "Y",
+                      "TYPE": "AUTH"
+                      },
+
+
+        "testing_group_page_url": ["https://shop.hansgrohe.ru/vannaya-komnata/smesiteli/smesiteli-dlya-rakoviny"],
+        "testing_product_page_url": ["https://shop.hansgrohe.ru/vannaya-komnata/smesiteli/smesiteli-dlya-rakoviny/smesitel-hansgrohe-talis-select-s-dlja-rakoviny-s-gigienicheskim-dushem-s-donnym-klapanom-push-open-72291000"],
+
+        "result_files_subdir": "results",
+        "saved_pages_subdir": "pages",
+        "saved_images_subdir": "images",
+        "need_to_save_pages": false,
+        "show_debug_messages": false,
+        "need_to_upload_images": true,
+        "filter_groups_only_url": "",
+        "Read_Only_List_Without_SingleProductPages": false,
+        "stop_after_number_of_products_on_page": 0,
+        "stop_after_number_of_groups": 0,
+        "verify_ssl": false,
+        "xpathes": {
+            "__Xpathes__": {
+                "structure_selector_xpath": "//div[@id='headerFixedWrap']//ul[@class='navigation__categories']",
+                "root_structure_groups_xpath": "li[contains(@class, 'navigation__category_reset')]",
+                "root_structure_info": {
+                    "name": "a/text()",
+                    "url": "a/@href",
+                    "sub_group_selectors": "ul/li[contains(@class, 'navigation__category_level')]",
+                    "img_url": ""
+                },
+                "recursively_structure_info": {
+                    "name": "a/text()",
+                    "url": "a/@href",
+                    "sub_group_selectors": "ul/li"
+                },
+                "group_page_slave_groups_xpath": {
+                    "selectors": "",
+                    "name": "",
+                    "url": "",
+                    "img_url": "",
+                    "img_logo_url": ""
+                },
+                "group_page_pagination_other_pages_xpath": "",
+                "group_page_pagination_next_page_xpath": "//div[@class='pager']//li[@class='next']/a/@href",
+
+                "group_page_product_xpath": {
+                    "selectors": "//div[contains(@class,'category-products')]//div[contains(@class,'product-cont')]",
+                    "name_part1": ".//h3[@class='h3_product-item']/a/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "url": ".//h3[@class='h3_product-item']/a/@href",
+                    "img_url": ".//div[contains(@class,'product-item__image-section')]/a/img/@src",
+                    "kod": ".//div[contains(@class,'product-item__sku')]/text()",
+                    "available_quantity": ".//div[@class='in-stock']/text()",
+                    "reserv_quantity": "",
+                    "price": ".//div[@class='product-item__price']/span/text()"
+
+                },
+                "product_info": {
+                    "selectors": "//section[@class='main-container']",
+                    "name_part1": ".//div[@id='product-info']//h1[contains(@class,'product-card__title')]/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "img_url": "(.//div[@id='product-info']//div[@class='images-gallery']//li)[1]/a/img/@src",
+                    "currency": "",
+                    "price": ".//div[@id='product-info']//div[@class='product-card__price']/span/text()",
+                    "kod": ".//div[@id='product-info']//div[@class='group']//span/text()",
+                    "brend": ".//div[@id='product-info']//div[@class='product-card__collection'][1]/a/text()",
+                    "collection": "(.//div[@id='product-info']//div[@class='product-card__collection']/text())[1]",
+                    "artikul": ".//div[@id='product-info']//div[@class='product-card__sku']/text()",
+                    "description": ".//div[@class='description']/p/text()"
+                },
+                "product_specification_info": {
+                    "selector": "//div[@class='product-card__description-block']//dl/div",
+                    "name": ".//dt/text()",
+                    "value": "(.//dd//text())[1]",
+                    "value_subselector": "",
+                    "Separate_by_simbol": ""
+                }
+            }
+        }
+    }
+}

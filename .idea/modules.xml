@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Parsing3.iml" filepath="$PROJECT_DIR$/.idea/Parsing3.iml" />
+      <module fileurl="file://C:/inetpub/wwwroot/Static_Default_Site/parse/fleksi_ru/.idea/fleksi_ru.iml" filepath="C:/inetpub/wwwroot/Static_Default_Site/parse/fleksi_ru/.idea/fleksi_ru.iml" />
+      <module fileurl="file://C:/inetpub/wwwroot/Static_Default_Site/parse/hansgrohe_ru/.idea/hansgrohe_ru.iml" filepath="C:/inetpub/wwwroot/Static_Default_Site/parse/hansgrohe_ru/.idea/hansgrohe_ru.iml" />
+      <module fileurl="file://C:/inetpub/wwwroot/Static_Default_Site/parse/ledeme_ru/.idea/ledeme_ru.iml" filepath="C:/inetpub/wwwroot/Static_Default_Site/parse/ledeme_ru/.idea/ledeme_ru.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../Grabbed_data/santehcentr_com/.idea/santehcentr_com.iml" filepath="$PROJECT_DIR$/../../Grabbed_data/santehcentr_com/.idea/santehcentr_com.iml" />
+      <module fileurl="file://C:/inetpub/wwwroot/Static_Default_Site/parse/santehsmart_ru/.idea/santehsmart_ru.iml" filepath="C:/inetpub/wwwroot/Static_Default_Site/parse/santehsmart_ru/.idea/santehsmart_ru.iml" />
+      <module fileurl="file://C:/inetpub/wwwroot/Static_Default_Site/parse/vogtrade_ru/.idea/vogceramic_ru.iml" filepath="C:/inetpub/wwwroot/Static_Default_Site/parse/vogtrade_ru/.idea/vogceramic_ru.iml" />
+    </modules>
+  </component>
+</project>

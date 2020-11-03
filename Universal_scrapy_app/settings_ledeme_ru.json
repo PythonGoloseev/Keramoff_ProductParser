@@ -1,0 +1,99 @@
+{
+    "__Add_spider_settings__": {
+        "start_url_list": [
+            "http://www.ledeme.ru/Products.asp"
+        ],
+
+
+        "login_required": false,
+        "login_url": "",
+        "login_formdata": {"USER_LOGIN": "",
+                      "USER_PASSWORD": "",
+                      "backurl": "",
+                      "AUTH_FORM": "Y",
+                      "TYPE": "AUTH"
+                      },
+
+
+        "testing_group_page_url": [
+            "http://www.ledeme.ru/Products.asp?cla=265"
+        ],
+
+        "testing_product_page_url": [
+            "http://www.ledeme.ru/Productsshow.asp?cla=292&id=533"
+        ],
+
+        "comment": "ledeme_2020-09-08",
+        "version": "1.0.0",
+        "result_catalog": "c:\\\\inetpub\\wwwroot\\Static_Default_Site\\parse\\ledeme_ru",
+        "result_files_subdir": "results",
+        "saved_pages_subdir": "pages",
+        "saved_images_subdir": "images",
+        "need_to_save_pages": false,
+        "show_debug_messages": false,
+        "need_to_upload_images": true,
+        "filter_groups_only_url": "",
+        "Read_Only_List_Without_SingleProductPages": false,
+        "stop_after_number_of_products_on_page": 0,
+        "stop_after_number_of_groups": 0,
+        "xpathes": {
+            "__Xpathes__": {
+                "structure_selector_xpath": "//div[@id='left2']",
+                "root_structure_groups_xpath": ".//ul/li/a",
+                "root_structure_info": {
+                    "name": "text()[1]",
+                    "url": "@href[1]",
+                    "sub_group_selectors": "",
+                    "img_url": ""
+                },
+                "recursively_structure_blocks_xpath": "",
+                "recursively_structure_info": {
+                    "name": "",
+                    "url": "",
+                    "sub_group_selectors": ""
+                },
+                "group_page_slave_groups_xpath": {
+                    "selectors": "",
+                    "name": ".//a[@class='tile__title fz_xl']/text()",
+                    "url": ".//a[@class='tile__title fz_xl']/@href",
+                    "img_url": "",
+                    "img_logo_url": ".//img[@class='tile__img']/@src"
+                },
+                "group_page_pagination_other_pages_xpath": "",
+                "group_page_pagination_next_page_xpath": "//div[contains (@class,'pagenvaigation-show-more')]/a/@href",
+
+                "group_page_product_xpath": {
+                    "selectors": "//ul[@class='ccs5']/li",
+                    "name_part1": "br/following-sibling::a[1]/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "url": "br/following-sibling::a[1]/@href",
+                    "img_url": "a/img[@border='0']/@src",
+                    "available_quantity": "",
+                    "reserv_quantity": "",
+                    "price": ""
+                },
+                "product_info": {
+                    "selectors": "//div[@id='right1']/ul[@class='ccs6']",
+                    "name_part1": "li/font/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "img_url": "li/img/@src ",
+                    "currency": "",
+                    "price": "",
+                    "kod": "",
+                    "brend": "",
+                    "collection": "",
+                    "artikul": "//br/following-sibling::text()[contains(.,'Артикул')]/following-sibling::b[1]/text()"
+                },
+                "product_specification_info": {
+                    "selector": "//div[@id='right1']/ul[@class='ccs6']",
+                    "name": "//br/following-sibling::text()/following-sibling::text()",
+                    "value": "будет получено через разделитеьл указанный ниже",
+                    "value_subselector": "",
+                    "Separate_by_simbol": "："
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,98 @@
+{
+    "__Add_spider_settings__": {
+        "start_url_list": [
+            "http://santehcentr.com/"
+        ],
+
+        "login_required": false,
+        "login_url": "",
+        "login_formdata": {"USER_LOGIN": "",
+                      "USER_PASSWORD": "",
+                      "backurl": "",
+                      "AUTH_FORM": "Y",
+                      "TYPE": "AUTH"
+                      },
+
+
+        "testing_group_page_url": [
+            "https://santehcentr.com/catalog/all/gruppa-is-vanny/brend-is-blb/"
+        ],
+
+        "testing_product_page_url": [
+            "https://www.vogtrade.ru/oboi/70281/36dc7820-69e2-11ea-9d8b-005056acd97c-70281-76/"
+        ],
+
+        "comment": "2020-08-26 settings",
+        "version": "2.0.0",
+        "result_catalog": "c:\\\\inetpub\\wwwroot\\Static_Default_Site\\parse\\Santehcentr_com\\",
+        "result_files_subdir": "results",
+        "saved_pages_subdir": "pages",
+        "saved_images_subdir": "images",
+        "need_to_save_pages": false,
+        "show_debug_messages": false,
+        "need_to_upload_images": true,
+        "filter_groups_only_url": "",
+        "Read_Only_List_Without_SingleProductPages": false,
+        "stop_after_number_of_products_on_page": 0,
+        "stop_after_number_of_groups": 0,
+        "xpathes": {
+            "__Xpathes__": {
+                "structure_selector_xpath": "//div[contains(@class, \"sidebar__collapse\")]",
+                "root_structure_groups_xpath": ".//li[@class = 'dropdown']",
+                "root_structure_info": {
+                    "name": "./a/text()",
+                    "url": "./a/@href",
+                    "sub_group_selectors": ".//div[@class='dropdown-menu']/ul/*",
+                    "img_url": ""
+                },
+                "recursively_structure_blocks_xpath": "div[@class='dropdown-menu']/ul/li",
+                "recursively_structure_info": {
+                    "name": "./a/text()",
+                    "url": "./a/@href",
+                    "sub_group_selectors": "./li/*"
+                },
+                "group_page_slave_groups_xpath": {
+                    "selectors": "",
+                    "name": "",
+                    "url": "",
+                    "img_url": "",
+                    "img_logo_url": ""
+                },
+                "group_page_pagination_other_pages_xpath": "//ul[@class=\"pagination\"]/li/a/@href",
+                "group_page_pagination_next_page_xpath": "",
+
+                "group_page_product_xpath": {
+                    "selectors": "//div[@class=\"card\"]",
+                    "name_part1": ".//a[@class='card-title']/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "url": ".//a[@class='card-title']/@href",
+                    "img_url": ".//img/@src",
+                    "available_quantity": "",
+                    "reserv_quantity": "",
+                    "price": ".//span[@class='card__price-cell']/text()"
+                },
+                "product_info": {
+                    "selectors": "//div[contains(@class, \"container\")][contains(@class, \"b-ware\")]",
+                    "name_part1": "//h1[@class=\"b-ware__title\"]/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "img_url": "//a[@class='ware-slider-for__cell gallery'][1]/@href",
+                    "currency": "//span[@class='card__price-cell']/span[@class='price-rub']/text()",
+                    "price": "//span[@class='card__price-cell']/text()",
+                    "kod": "//div[text()='\u041a\u043e\u0434 \u0442\u043e\u0432\u0430\u0440\u0430:']/span/text()",
+                    "brend": "//div[text()[contains(.,'Бренд')]]/span/a/text()",
+                    "collection": "",
+                    "artikul": "//div[text()[contains(.,'Артикул')]]/span/text()"
+                },
+                "product_specification_info": {
+                    "selector": "//table[@class='table ware-table']/tbody",
+                    "name": ".//tr/td[1]/text()",
+                    "value": ".//tr/td[2]/text()",
+                    "value_subselector": "",
+                    "Separate_by_simbol": ""
+                }
+            }
+        }
+    }
+}

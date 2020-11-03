@@ -1,0 +1,98 @@
+{
+    "__Add_spider_settings__": {
+        "start_url_list": [
+            "https://www.vogtrade.ru"
+        ],
+        "result_catalog": "c:\\\\inetpub\\wwwroot\\Static_Default_Site\\parse\\vogtrade_ru",
+        "comment": "vogtrade_2020-08-23",
+        "version": "1.0.0",
+
+
+        "login_required": false,
+        "login_url": "https://www.sitename.ru/opt/",
+        "login_formdata": {"USER_LOGIN": "",
+                      "USER_PASSWORD": "",
+                      "backurl": "",
+                      "AUTH_FORM": "Y",
+                      "TYPE": "AUTH"
+                      },
+
+
+        "testing_group_page_url": [
+            "https://www.vogtrade.ru/oboi/70281/"
+        ],
+
+        "testing_product_page_url": [
+            "https://www.vogtrade.ru/plitka/woodstone/e21dee41-a808-4ebd-97f5-3e6b40b92e50-gt407vg/"
+        ],
+
+        "result_files_subdir": "results",
+        "saved_pages_subdir": "pages",
+        "saved_images_subdir": "images",
+        "need_to_save_pages": false,
+        "show_debug_messages": false,
+        "need_to_upload_images": true,
+        "filter_groups_only_url": "",
+        "Read_Only_List_Without_SingleProductPages": false,
+        "stop_after_number_of_products_on_page": 0,
+        "stop_after_number_of_groups": 0,
+        "xpathes": {
+            "__Xpathes__": {
+                "structure_selector_xpath": "(//div[contains (@class,'top-nav')]//ul[@class='main-menu__list'])[1]",
+                "root_structure_groups_xpath": ".//li[contains(@class, 'main-menu__item')]/a[(contains(@href, 'plitka')) or (contains(@href, 'oboi'))]",
+                "root_structure_info": {
+                    "name": "text()[1]",
+                    "url": "@href[1]",
+                    "sub_group_selectors": "",
+                    "img_url": ""
+                },
+                "recursively_structure_blocks_xpath": "div[@class='dropdown-menu']/ul/li",
+                "recursively_structure_info": {
+                    "name": "",
+                    "url": "",
+                    "sub_group_selectors": ""
+                },
+                "group_page_slave_groups_xpath": {
+                    "selectors": "//div[@class='tile__item']",
+                    "name": ".//a[@class='tile__title fz_xl']/text()",
+                    "url": ".//a[@class='tile__title fz_xl']/@href",
+                    "img_url": "",
+                    "img_logo_url": ".//img[@class='tile__img']/@src"
+                },
+                "group_page_pagination_other_pages_xpath": "",
+                "group_page_pagination_next_page_xpath": "//div[contains (@class,'pagenvaigation-show-more')]/a/@href",
+                "group_page_product_xpath": {
+                    "selectors": "//div[@class='tab-content']//div[contains(@class, 'tab-pane fade show active')]//div[@class='tile__container']",
+                    "name_part1": ".//div[@class='tile__desc']/a/text()",
+                    "name_part2": ".//div[@class='tile__text'][1]/text()",
+                    "name_part3": ".//div[@class='tile__text'][2]/text()",
+                    "url": ".//div[@class='tile__desc']/a/@href",
+                    "img_url": ".//div[@class='tile__img-wrap']/img/@src",
+                    "available_quantity": ".//div[@class='in-stock']/text()",
+                    "reserv_quantity": "",
+                    "price": ""
+                },
+                "product_info": {
+                    "selectors": "//body",
+                    "name_part1": ".//div[@class = 'row']//h1/text()",
+                    "name_part2": ".//div[@class='hero__coll-desc']/text()",
+                    "name_part3": ".//div[@class='hero__coll-desc'][1]/a[1]/text()[1]",
+                    "img_url": ".//a[contains (@class, 'goods__img')][1]/@href",
+                    "currency": "",
+                    "price": "",
+                    "kod": "",
+                    "brend": ".//li[@class='goods-list__item'][text()[contains(.,'Бренд')]]//a/text()",
+                    "collection": ".//li[@class='goods-list__item'][text()[contains(.,'Коллекция')]]//a/text()",
+                    "artikul": ".//li[@class='goods-list__item'][text()[contains(.,'Артикул')]]/span/text()"
+                },
+                "product_specification_info": {
+                    "selector": "//div[@class = 'goods row']//li[@class='goods-list__item']",
+                    "name": "text()",
+                    "value": "span/text()|span/a/@href",
+                    "value_subselector": "",
+                    "Separate_by_simbol": ""
+                }
+            }
+        }
+    }
+}

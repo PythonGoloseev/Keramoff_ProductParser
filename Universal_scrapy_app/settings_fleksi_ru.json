@@ -1,0 +1,98 @@
+{
+    "__Add_spider_settings__": {
+        "start_url_list": [
+            "https://fleksi.ru/catalog/"
+        ],
+        "result_catalog": "c:\\\\inetpub\\wwwroot\\Static_Default_Site\\parse\\fleksi_ru",
+        "comment": "fleksi_2020-10-29",
+        "version": "1.0.0",
+
+
+        "login_required": false,
+        "login_url": "https://www.sitename.ru/opt/",
+        "login_formdata": {"USER_LOGIN": "",
+                      "USER_PASSWORD": "",
+                      "backurl": "",
+                      "AUTH_FORM": "Y",
+                      "TYPE": "AUTH"
+                      },
+
+
+        "testing_group_page_url": [
+            "https://fleksi.ru/catalog/keramicheskaya-plitka/"
+        ],
+
+        "testing_product_page_url": [
+            "https://fleksi.ru/catalog/mebel-dlya-vannoy-komnaty/shkafy-penaly/shkaf-penal-armadi-art-vallessi-dub-temnyy/"
+        ],
+
+        "result_files_subdir": "results",
+        "saved_pages_subdir": "pages",
+        "saved_images_subdir": "images",
+        "need_to_save_pages": false,
+        "show_debug_messages": false,
+        "need_to_upload_images": true,
+        "filter_groups_only_url": "",
+        "Read_Only_List_Without_SingleProductPages": false,
+        "stop_after_number_of_products_on_page": 0,
+        "stop_after_number_of_groups": 0,
+        "xpathes": {
+            "__Xpathes__": {
+                "structure_selector_xpath": "//div[@class='catalog-section-list']",
+                "root_structure_groups_xpath": ".//a[@class='catalog-section-item']",
+                "root_structure_info": {
+                    "name": "@title",
+                    "url": "@href[1]",
+                    "sub_group_selectors": "",
+                    "img_url": ""
+                },
+                "recursively_structure_blocks_xpath": "",
+                "recursively_structure_info": {
+                    "name": "",
+                    "url": "",
+                    "sub_group_selectors": ""
+                },
+                "group_page_slave_groups_xpath": {
+                    "selectors": "//div[@class='catalog-section-list']//a[@class='catalog-section-item']",
+                    "name": "@title",
+                    "url": "@href",
+                    "img_url": ".//img[1]/@src",
+                    "img_logo_url": ""
+                },
+                "group_page_pagination_other_pages_xpath": "",
+                "group_page_pagination_next_page_xpath": "//div[@class='catalog-section-pagination'][1]/ul/li[@class='last']/a/@href",
+                "group_page_product_xpath": {
+                    "selectors": "//div[@class='catalog-section']//div[@class='product-item-container']",
+                    "name_part1": ".//div[@class='product-item']//div[@class='product-item-title']/a/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "url": ".//div[@class='product-item']//div[@class='product-item-title']/a/@href",
+                    "img_url": ".//div[@class='product-item']//a/img/@src",
+                    "available_quantity": "",
+                    "reserv_quantity": "",
+                    "price": ".//div[@class='product-item']//span[@class='product-item-price-current']/text()"
+                },
+                "product_info": {
+                    "selectors": "//div[@class='page-container-wrapper']",
+                    "name_part1": ".//h1[@id='pagetitle']/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "img_url": ".//div[@class='product-item-detail-slider-image active']/img[1]/@src",
+                    "currency": "",
+                    "price": ".//span[@class='product-item-detail-price-current']/text()",
+                    "kod": ".//div[@class='product-item-detail-article']/span/text()",
+                    "brend": ".//div[@class='product-item-detail-properties-container']//div[@class='product-item-detail-properties'][div[contains(.,'Бренд')]]/div[2]/a/text()\n",
+                    "collection": ".//div[@class='product-item-detail-properties-container']//div[@class='product-item-detail-properties'][div[contains(.,'Коллекция')]]/div[2]//text()\n",
+                    "artikul": ""
+                },
+                "product_specification_info": {
+                    "selector": "//div[@class='product-item-detail-properties-block']",
+                    "name": ".//div[@class='product-item-detail-properties']/div[@class='product-item-detail-properties-name']/text()",
+                    "value": ".//div[@class='product-item-detail-properties']/div[@class='product-item-detail-properties-val']",
+                    "value_subselector": "text()",
+                    "Separate_by_simbol": ""
+                }
+            }
+        }
+    }
+}

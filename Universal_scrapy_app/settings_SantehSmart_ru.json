@@ -1,0 +1,97 @@
+{
+    "__Add_spider_settings__": {
+        "start_url_list": [
+            "https://www.santehsmart.ru"
+        ],
+
+        "login_required": true,
+        "login_url": "https://www.santehsmart.ru/opt/",
+        "login_formdata": {"USER_LOGIN": "zakaz.santehnika@keramoff-sochi.ru",
+                      "USER_PASSWORD": "oa3fLwsj",
+                      "backurl": "/promotions/",
+                      "AUTH_FORM": "Y",
+                      "TYPE": "AUTH"
+                      },
+
+
+        "testing_group_page_url": ["https://www.santehsmart.ru/catalog/mebel-dlya-vannykh-komnat/"],
+        "testing_product_page_url": ["https://www.santehsmart.ru/catalog/product/52340.html"],
+
+        "comment": "santehsmart_2020-09-08",
+        "version": "1.0.0",
+        "result_catalog": "c:\\\\inetpub\\wwwroot\\Static_Default_Site\\parse\\santehsmart_ru",
+        "result_files_subdir": "results",
+        "saved_pages_subdir": "pages",
+        "saved_images_subdir": "images",
+        "need_to_save_pages": false,
+        "show_debug_messages": false,
+        "need_to_upload_images": true,
+        "filter_groups_only_url": "",
+        "Read_Only_List_Without_SingleProductPages": false,
+        "stop_after_number_of_products_on_page": 0,
+        "stop_after_number_of_groups": 0,
+        "verify_ssl": false,
+        "xpathes": {
+            "__Xpathes__": {
+                "structure_selector_xpath": "//nav[@class='catalogList__categoryNavigation']/ul[contains(@class,'catalogList--onMain')]",
+                "root_structure_groups_xpath": "li",
+                "root_structure_info": {
+                    "name": "a[@class='catalogList__categoryItem']/text()",
+                    "url": "a[@class='catalogList__categoryItem']/@href",
+                    "sub_group_selectors": "ul[@class='catalogList__categorySublist']/li/ul/div/div/li/a",
+                    "img_url": ""
+                },
+                "recursively_structure_blocks_xpath": "",
+                "recursively_structure_info": {
+                    "name": "",
+                    "url": "",
+                    "sub_group_selectors": ""
+                },
+                "group_page_slave_groups_xpath": {
+                    "selectors": "//div/ul[@data-qcontent='component__sameCatProducts']/li",
+                    "name": "a[@class='sameCatProducts__link']/text()",
+                    "url": "a[@class='sameCatProducts__link']/@href",
+                    "img_url": "",
+                    "img_logo_url": ""
+                },
+                "group_page_pagination_other_pages_xpath": "",
+                "group_page_pagination_next_page_xpath": "//div[contains(@class,'productSection__pager')][@data-pagination-num=1]//a[@id='navigation_1_next_page']/@href",
+
+                "group_page_product_xpath": {
+                    "selectors": "//div[contains(@class,'productCol__list')]//div[@data-entity='items-row']",
+                    "name_part1": ".//h6[@class='productCol__name']/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "url": ".//a[@class='productCol__link'][1]/@href",
+                    "img_url": ".//div[@class='productCol__img'][1]/@style",
+                    "kod": ".//span[@class='productCol__sku']/text()",
+                    "available_quantity": ".//span/text()[contains(.,'Доступно')]",
+                    "reserv_quantity": ".//span/text()[contains(.,'Резерв')]",
+                    "price": ""
+
+                },
+                "product_info": {
+                    "selectors": "//div[contains(@class,'page__content')]",
+                    "name_part1": ".//h1[@class='page__title']/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "img_url": ".//div[contains(@class,'productImageSlider')][1]//img[1]/@src",
+                    "currency": "",
+                    "price": "//span[@class='item_current_price']/text()",
+                    "kod": ".//div[@class='group']//span/text()",
+                    "brend": "//div[@class='productInfo__section']//div[@class='productChar__terminDesc'][following::dt][contains(.,'Производитель')]/dd/a/text()",
+                    "collection": "",
+                    "artikul": "//div[@class='productInfo__section']//div[@class='productChar__terminDesc'][following::dt][contains(.,'артикул')]/dd/text()",
+                    "description": "//div[@class='subProductInfo__contents']//section[@class='subProductInfo__description'][1]/p/text()"
+                },
+                "product_specification_info": {
+                    "selector": "//div[@class='productChar__terminDesc']",
+                    "name": ".//dt/text()",
+                    "value": "(.//dd//text())[1]",
+                    "value_subselector": "",
+                    "Separate_by_simbol": ""
+                }
+            }
+        }
+    }
+}
