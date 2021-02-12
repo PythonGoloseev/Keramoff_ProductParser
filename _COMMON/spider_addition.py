@@ -357,7 +357,12 @@ class Spider_addition():
         auth_words = "?authorize=yes"
         deauth_words = "?logout=yes"
 
+        #UNF_STR.print_fuksi(f"пробую авторизоваться")
+
         if auth_words in response.text:
+            # file_name = "auth_page.txt"
+            # UNF_OS.Save_text_to_file(file_name, self.add_settings.get_saved_pages_path(), response.text)
+            # UNF_STR.print_red(f"нашел auth_words={auth_words} в тексте ответа")
             #self.RaiseErrorMessage(f"авторизация неудачна, потому как нашел текст auth_words={auth_words}")
             result_success = False
         elif deauth_words in response.text:

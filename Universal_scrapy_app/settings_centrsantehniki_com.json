@@ -28,7 +28,7 @@
         "result_files_subdir": "results",
         "saved_pages_subdir": "pages",
         "saved_images_subdir": "images",
-        "need_to_save_pages": true,
+        "need_to_save_pages": false,
         "show_debug_messages": false,
         "need_to_upload_images": true,
         "filter_groups_only_url": "",

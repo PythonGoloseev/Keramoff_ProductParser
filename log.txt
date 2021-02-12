@@ -1,0 +1,3 @@
+INFO: Scrapy 2.2.1 started (bot: scrapybot)
+INFO: Versions: lxml 4.5.2.0, libxml2 2.9.5, cssselect 1.1.0, parsel 1.6.0, w3lib 1.22.0, Twisted 20.3.0, Python 3.8.3 (tags/v3.8.3:6f8c832, May 13 2020, 22:20:19) [MSC v.1925 32 bit (Intel)], pyOpenSSL 19.1.0 (OpenSSL 1.1.1g  21 Apr 2020), cryptography 3.0, Platform Windows-10-10.0.14393-SP0
+DEBUG: Using reactor: twisted.internet.selectreactor.SelectReactor

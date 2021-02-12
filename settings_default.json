@@ -1,0 +1,81 @@
+{
+    "__Add_spider_settings__": {
+        "start_url_list": [
+            "https://www.vogtrade.ru"
+        ],
+        "testing_group_page_url": [
+            "https://www.vogtrade.ru/plitka/",
+            "https://www.vogtrade.ru/plitka/ipanema/"
+        ],
+        "testing_product_page_url": [
+            "https://www.vogtrade.ru/plitka/ipanema/38ace7e2-5d8b-46ed-898c-084f2aaf7c1a-1906-0005/"
+        ],
+        "comment": "vogtrade_2020-08-23",
+        "version": "1.0.0",
+        "result_catalog": "l:\\\\_Важное\\6 Работа\\Python\\Grabbed_data\\vogceramic_ru",
+        "result_files_subdir": "results",
+        "saved_pages_subdir": "pages",
+        "saved_images_subdir": "images",
+        "need_to_save_pages": true,
+        "show_debug_messages": true,
+        "filter_groups_only_url": "",
+        "Read_Only_List_Without_SingleProductPages": false,
+        "stop_after_number_of_products_on_page": 1,
+        "stop_after_number_of_groups": 1,
+        "need_to_upload_images": true,
+        "xpathes": {
+            "__Xpathes__": {
+                "structure_selector_xpath": "(//div[contains (@class,'top-nav')]//ul[@class='main-menu__list'])[1]",
+                "root_structure_groups_xpath": ".//li[contains(@class, 'main-menu__item')]/a[(contains(@href, 'plitka')) or (contains(@href, 'oboi'))]",
+                "root_structure_info": {
+                    "name": "text()[1]",
+                    "url": "@href[1]",
+                    "sub_group_selectors": "",
+                    "img_url": ""
+                },
+                "recursively_structure_blocks_xpath": "div[@class='dropdown-menu']/ul/li",
+                "recursively_structure_info": {
+                    "name": "",
+                    "url": "",
+                    "sub_group_selectors": ""
+                },
+                "group_page_slave_groups_xpath": {
+                    "selectors": "//div[@class='tile__item']",
+                    "name": ".//a[@class='tile__title fz_xl']/text()",
+                    "url": ".//a[@class='tile__title fz_xl']/@href",
+                    "img_url": "",
+                    "img_logo_url": ".//img[@class='tile__img']/@src"
+                },
+                "group_page_pagination_other_pages_xpath": "",
+                "group_page_pagination_next_page_xpath": "//div[contains (@class,'pagenvaigation-show-more')]/a/@href",
+                "group_page_product_xpath": {
+                    "selectors": "//div[@class='tab-content']//div[contains(@class, 'tab-pane fade show active')]//div[@class='tile__container']",
+                    "name_part1": "",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "url": ".//div[@class='tile__desc']/a/@href",
+                    "img_url": ".//div[@class='tile__img-wrap']/img/@src",
+                    "price": ""
+                },
+                "product_info": {
+                    "selectors": "//div[contains(@class, \"container\")][contains(@class, \"b-ware\")]",
+                    "name_part1": "",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "img_url": "//a[@class='ware-slider-for__cell gallery'][1]/@href",
+                    "currency": "//span[@class='card__price-cell']/span[@class='price-rub']/text()",
+                    "price": "//span[@class='card__price-cell']/text()",
+                    "kod": "//div[text()='Код товара:']/span/text()",
+                    "brend": "//div[text()='Бренд:']/span/a/text()",
+                    "collection": "",
+                    "artikul": "//div[text()='Артикул:']/span/text()"
+                },
+                "product_specification_info": {
+                    "selector": "//table[@class='table ware-table']/tbody",
+                    "name": ".//tr/td[1]/text()",
+                    "value": ".//tr/td[2]/text()"
+                }
+            }
+        }
+    }
+}

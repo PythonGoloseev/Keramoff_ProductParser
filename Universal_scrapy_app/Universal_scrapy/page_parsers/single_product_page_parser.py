@@ -40,7 +40,10 @@ class Single_product_page_parser():
         str_product_progress = f"{len(self.__spider.uploaded_products_dict)} of {len(self.__spider.requested_products_dict)}"
         str_group_progress = f"{len(self.__spider.uploaded_groups_dict)}/{len(self.__spider.requested_groups_dict)}"
         # self.__spider.debug_print(f"   ---- product page async uploaded {str_progress} page url={response.url}")
+
+
         print(f"   ---- product page async uploaded {str_product_progress}  (crawl {str_group_progress} groups) url={response.url}")
+
 
         # if not self.__spider.show_debug_messages:
             # progress_bar = progressbar.ProgressBar(maxval=len(self.__spider.requested_products_dict))
