@@ -28,11 +28,11 @@
         "result_files_subdir": "results",
         "saved_pages_subdir": "pages",
         "saved_images_subdir": "images",
-        "need_to_save_pages": false,
+        "need_to_save_pages": true,
         "show_debug_messages": false,
         "need_to_upload_images": true,
         "filter_groups_only_url": "",
-        "Read_Only_List_Without_SingleProductPages": false,
+        "Read_Only_List_Without_SingleProductPages": true,
         "stop_after_number_of_products_on_page": 0,
         "stop_after_number_of_groups": 0,
         "xpathes": {

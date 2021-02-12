@@ -252,7 +252,8 @@ class Spider_addition():
         if self.alternative_sesion == None:
             #UNF_STR.print_fuksi(f"   - создаю новую alternative_sesion")
             self.alternative_sesion = requests.Session()
-            self.alternative_sesion.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/78.0'})
+            self.alternative_sesion.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0'})
+
 
             if self.add_settings.login_required:
                 #UNF_STR.print_fuksi("   вижу потребность авторизоваться ")

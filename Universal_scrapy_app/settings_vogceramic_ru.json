@@ -88,6 +88,7 @@
                     "selector": "//div[@class = 'goods row']//li[@class='goods-list__item']",
                     "name": "text()",
                     "value": "span/text()|span/a/@href",
+                    "value_subselector": "text()",
                     "Separate_by_simbol": ""
                 }
             }
