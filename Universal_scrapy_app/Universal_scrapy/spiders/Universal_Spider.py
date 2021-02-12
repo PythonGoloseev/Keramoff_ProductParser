@@ -19,7 +19,7 @@ from scrapy.http import Request
 
 from scrapy.http import FormRequest
 from scrapy.utils.response import open_in_browser
-
+from scrapy.utils.log import configure_logging
 
 class Universal_Spider(scrapy.Spider, Spider_addition):
     name = 'Universal_spider'

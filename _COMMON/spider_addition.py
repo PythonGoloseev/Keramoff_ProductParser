@@ -78,7 +78,7 @@ class Spider_addition():
 
         else:
             self.settings_file_name = settings_file
-            print(f"   - указано использоваться файл настроек {self.settings_file_name}")
+            print(f"   - указано использовать файл настроек {self.settings_file_name}")
 
 
         save_default_params_file()
