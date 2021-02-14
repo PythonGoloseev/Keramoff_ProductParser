@@ -65,6 +65,10 @@ class Single_product_page_parser():
 
         self.parse_info_and_fill_product(response, product_scrapy_item, product_from_list)
 
+
+        self.__spider.save_progress_file()
+
+
         yield product_scrapy_item
 
     def parse_info_and_fill_product(self, response, product_scrapy_item, product_from_list):

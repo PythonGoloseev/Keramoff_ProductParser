@@ -60,7 +60,6 @@ class Group_page_parser():
         groups_limit = self.__spider.add_settings.stop_after_number_of_groups
 
 
-
         if len(group_page_info.slave_group_pages_dict)>0:
             #UNF_STR.print_fuksi(f"Открываю подчиненные {len(group_page_info.slave_group_pages_dict)} групп")
             slave_groups_generator = self.open_each_slave_group(group_page_info, response, current_group)
@@ -83,6 +82,8 @@ class Group_page_parser():
             products_generator = self.open_each_product(group_page_info, response, current_group)
             for each_value in products_generator:
                 yield each_value
+
+        self.__spider.save_progress_file()
 
     # -----------------------------------------------------------------------------------------------------------------
     # --open_each_slave_group-------------------------------------------------------------------------------------------

@@ -44,10 +44,10 @@ if __name__ == '__main__':
     configure_logging(my_settings)
 
     process = CrawlerProcess(my_settings)
-    process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_centrsantehniki_com.json" )
+    #process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_centrsantehniki_com.json" )
     process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_fleksi_ru.json" )
-    process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_hansgrohe_ru.json")
-    process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_ledeme_ru.json")
+    #process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_hansgrohe_ru.json")
+    #process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_ledeme_ru.json")
 
     #Неудачная авторизация
     #process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_SantehSmart_ru.json")

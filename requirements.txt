@@ -1,0 +1,5 @@
+Scrapy~=2.2.1
+urllib3~=1.25.10
+requests~=2.24.0
+pytest~=6.0.1
+itemadapter~=0.1.0

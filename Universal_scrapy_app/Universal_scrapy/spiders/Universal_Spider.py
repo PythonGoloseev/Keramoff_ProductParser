@@ -201,6 +201,11 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
         print(f"--------------------spider {self.name} opened-----------------------------")
         self.start_time = datetime.datetime.now()
         self.delete_summary_file()
+        self.delete_progress_file()
+        self.finish_time = None
+        self.duration = None
+
+        self.save_progress_file()
 
     #--------------------------------------------------------------------------------------------------------------------------
     #--------------------------------------------------------------------------------------------------------------------------
@@ -208,6 +213,9 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
     def spider_closed(self, spider):
         self.finish_time = datetime.datetime.now()
         self.duration = int((self.finish_time -self.start_time).total_seconds()/60)
+
+        #удаляю файл прогресса
+        self.delete_progress_file()
 
         #сохраняю структуру групп в отдельный json
         self.debug_print(f"   - сохраняю итоговую структурe в каталог output")

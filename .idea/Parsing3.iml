@@ -14,9 +14,6 @@
     <orderEntry type="module" module-name="fleksi_ru" />
     <orderEntry type="module" module-name="santehcentr_com" />
   </component>
-  <component name="PackageRequirementsSettings">
-    <option name="requirementsPath" value="" />
-  </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="pytest" />
   </component>

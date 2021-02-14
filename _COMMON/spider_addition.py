@@ -149,15 +149,28 @@ class Spider_addition():
                 UNF_OS.clear_text_file(file_path)
 
 
+    def get_progress_file_name(self):
+        res_file_name = "spider_progress.json"
+        return res_file_name
+
     def get_summary_file_name(self):
         res_file_name = "spider_summary.json"
         return res_file_name
 
-    def delete_summary_file(self):
-        path_tu_summary = os.path.join(self.add_settings.get_result_files_path(), self.get_summary_file_name())
-        if os.path.exists(path_tu_summary):
+    def delete_progress_file(self):
+        path_to_progress_file = os.path.join(self.add_settings.get_result_files_path(), self.get_progress_file_name())
+        if os.path.exists(path_to_progress_file):
             #UNF_STR.print_fuksi(f"удаляю старый файл {path_tu_summary}")
-            os.remove(path_tu_summary)
+            os.remove(path_to_progress_file)
+
+    def delete_summary_file(self):
+        path_to_summary = os.path.join(self.add_settings.get_result_files_path(), self.get_summary_file_name())
+        if os.path.exists(path_to_summary):
+            #UNF_STR.print_fuksi(f"удаляю старый файл {path_to_summary}")
+            os.remove(path_to_summary)
+
+    def save_progress_file(self):
+        self.save_object_to_json_file(self.get_progress_file_name(), self.get_sprider_summary())
 
     def get_abs_path(self, img_rel_path):
         img_abs_path = self.add_settings.get_saved_images_path() + "\\" + img_rel_path
