@@ -3,6 +3,7 @@
         "start_url_list": [
             "https://www.santehsmart.ru"
         ],
+        "use_selenium" : false,
 
         "login_required": true,
         "login_url": "https://www.santehsmart.ru/opt/",
@@ -41,12 +42,12 @@
                     "sub_group_selectors": "ul[@class='catalogList__categorySublist']/li/ul/div/div/li/a",
                     "img_url": ""
                 },
-                "recursively_structure_blocks_xpath": "",
                 "recursively_structure_info": {
                     "name": "",
                     "url": "",
                     "sub_group_selectors": ""
                 },
+                "recursively_structure_blocks_xpath": "",
                 "group_page_slave_groups_xpath": {
                     "selectors": "//div/ul[@data-qcontent='component__sameCatProducts']/li",
                     "name": "a[@class='sameCatProducts__link']/text()",
@@ -85,6 +86,7 @@
                     "description": "//div[@class='subProductInfo__contents']//section[@class='subProductInfo__description'][1]/p/text()"
                 },
                 "product_specification_info": {
+                    "postfix": "",
                     "selector": "//div[@class='productChar__terminDesc']",
                     "name": ".//dt/text()",
                     "value": "(.//dd//text())[1]",

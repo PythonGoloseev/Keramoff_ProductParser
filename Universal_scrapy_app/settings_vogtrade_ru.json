@@ -3,6 +3,8 @@
         "start_url_list": [
             "https://www.vogtrade.ru"
         ],
+        "use_selenium" : false,
+
         "result_catalog": "c:\\\\inetpub\\wwwroot\\Static_Default_Site\\parse\\vogtrade_ru",
         "comment": "vogtrade_2020-08-23",
         "version": "1.0.0",
@@ -46,12 +48,12 @@
                     "sub_group_selectors": "",
                     "img_url": ""
                 },
-                "recursively_structure_blocks_xpath": "div[@class='dropdown-menu']/ul/li",
                 "recursively_structure_info": {
                     "name": "",
                     "url": "",
                     "sub_group_selectors": ""
                 },
+                "recursively_structure_blocks_xpath": "div[@class='dropdown-menu']/ul/li",
                 "group_page_slave_groups_xpath": {
                     "selectors": "//div[@class='tile__item']",
                     "name": ".//a[@class='tile__title fz_xl']/text()",
@@ -83,9 +85,11 @@
                     "kod": "",
                     "brend": ".//li[@class='goods-list__item'][text()[contains(.,'Бренд')]]//a/text()",
                     "collection": ".//li[@class='goods-list__item'][text()[contains(.,'Коллекция')]]//a/text()",
-                    "artikul": ".//li[@class='goods-list__item'][text()[contains(.,'Артикул')]]/span/text()"
+                    "artikul": ".//li[@class='goods-list__item'][text()[contains(.,'Артикул')]]/span/text()",
+                    "description": ""
                 },
                 "product_specification_info": {
+                    "postfix": "",
                     "selector": "//div[@class = 'goods row']//li[@class='goods-list__item']",
                     "name": "text()",
                     "value": "span/text()|span/a/@href",

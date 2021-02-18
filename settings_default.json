@@ -3,6 +3,7 @@
         "start_url_list": [
             "https://www.vogtrade.ru"
         ],
+        "use_selenium" : false,
         "testing_group_page_url": [
             "https://www.vogtrade.ru/plitka/",
             "https://www.vogtrade.ru/plitka/ipanema/"
@@ -33,12 +34,12 @@
                     "sub_group_selectors": "",
                     "img_url": ""
                 },
-                "recursively_structure_blocks_xpath": "div[@class='dropdown-menu']/ul/li",
                 "recursively_structure_info": {
                     "name": "",
                     "url": "",
                     "sub_group_selectors": ""
                 },
+                "recursively_structure_blocks_xpath": "div[@class='dropdown-menu']/ul/li",
                 "group_page_slave_groups_xpath": {
                     "selectors": "//div[@class='tile__item']",
                     "name": ".//a[@class='tile__title fz_xl']/text()",
@@ -71,6 +72,7 @@
                     "artikul": "//div[text()='Артикул:']/span/text()"
                 },
                 "product_specification_info": {
+                    "postfix": "",
                     "selector": "//table[@class='table ware-table']/tbody",
                     "name": ".//tr/td[1]/text()",
                     "value": ".//tr/td[2]/text()"

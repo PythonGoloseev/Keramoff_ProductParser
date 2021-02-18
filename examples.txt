@@ -4,4 +4,4 @@ response.xpath("//div[@class='my-4']/span/text()").get()
 response.css('.my-4 span::text').get()
 view(response)
 
-scrapy crawl Universal_spider --loglevel WARNING -a settings_file=---settings_centrsantehniki_com.json
+scrapy crawl Universal_spider --loglevel WARNING -a settings_file=settings_santehnika_online_ru.json

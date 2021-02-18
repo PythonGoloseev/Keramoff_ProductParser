@@ -6,13 +6,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.8 (Parsing3)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="vogceramic_ru" />
-    <orderEntry type="module" module-name="vogceramic_ru" />
-    <orderEntry type="module" module-name="hansgrohe_ru" />
-    <orderEntry type="module" module-name="santehsmart_ru" />
-    <orderEntry type="module" module-name="ledeme_ru" />
-    <orderEntry type="module" module-name="fleksi_ru" />
-    <orderEntry type="module" module-name="santehcentr_com" />
+    <orderEntry type="module" module-name="UNF" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="pytest" />

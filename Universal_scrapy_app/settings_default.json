@@ -12,6 +12,7 @@
         ],
         "comment": "vogtrade_2020-08-23",
         "version": "1.0.0",
+        "use_selenium": false,
         "result_catalog": "l:\\\\_Важное\\6 Работа\\Python\\Grabbed_data\\vogceramic_ru",
         "result_files_subdir": "results",
         "saved_pages_subdir": "pages",
@@ -68,12 +69,14 @@
                     "kod": "//div[text()='Код товара:']/span/text()",
                     "brend": "//div[text()='Бренд:']/span/a/text()",
                     "collection": "",
-                    "artikul": "//div[text()='Артикул:']/span/text()"
+                    "artikul": "//div[text()='Артикул:']/span/text()",
+                    "description": ""
                 },
                 "product_specification_info": {
                     "selector": "//table[@class='table ware-table']/tbody",
                     "name": ".//tr/td[1]/text()",
-                    "value": ".//tr/td[2]/text()"
+                    "value": ".//tr/td[2]/text()",
+                    "postfix": ""
                 }
             }
         }

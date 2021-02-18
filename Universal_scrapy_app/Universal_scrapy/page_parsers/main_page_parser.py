@@ -1,3 +1,4 @@
+import pprint
 from urllib.parse import urljoin
 import urllib3
 
@@ -30,9 +31,24 @@ class Main_Page_Parser():
         self.domain_url = UNF_URLs.get_base_domain(response.url)
 
 
+
         xpathes = spider.add_settings.xpathes
 
         xpath = xpathes.structure_selector_xpath
+
+        # original_body = response.body
+        # UNF_STR.print_fuksi(f"original body type={type(original_body)} ")
+        # original_body_str = original_body.decode("utf-8")
+        #
+        # del_str = "http://www.w3.org/2000/svg"
+        # new_body_str = original_body_str.replace(del_str, "-AAA-")
+        # UNF_STR.print_fuksi(f"del_str={del_str}")
+        # UNF_STR.print_blue(response.text)
+        #
+        # new_body = new_body_str.encode('utf-8')
+        # clear_response = response.replace(body=new_body)
+        # UNF_STR.print_fuksi(f"len original={len(original_body_str)}   clear_len={len(new_body_str)}")
+        # response = clear_response
 
         structure_block_Selectors = response.xpath(xpath)
 
@@ -72,7 +88,7 @@ class Main_Page_Parser():
             group_url = Get_text_by_xpath(each_root_block, xpathes.root_structure_info["url"])
             group_img_url = Get_text_by_xpath(each_root_block, xpathes.root_structure_info["img_url"])
 
-            spider.debug_print(f"      - обнаружил корневую группу {group_name} url={group_url}")
+            spider.debug_print(f"      - обнаружил корневую группу name={group_name} url={group_url}")
 
             group_logo_url = None
             if UNF_STR.is_empty(sub_group_selectors_xpath):
@@ -113,8 +129,11 @@ class Main_Page_Parser():
 
         xpathes = spider.add_settings.xpathes
 
+        # UNF_STR.print_fuksi(f"sub_group_selectors")
+        # pprint.pprint(parent_catalog.sub_group_selectors)
+
         tab = "   "*level
-        if len(parent_catalog.sub_group_selectors) == 0:
+        if parent_catalog.sub_group_selectors == None or len(parent_catalog.sub_group_selectors) == 0:
             # UNF_STR.print_black(
             #     f"   {tab} -у родителя {parent_catalog.name}   нет вложеных подгрупп {level} уровня")
             return
@@ -124,6 +143,8 @@ class Main_Page_Parser():
             pass
 
         for index, each_recursively_block in enumerate(parent_catalog.sub_group_selectors):
+
+            #UNF_STR.print_fuksi(f"  - исследую блок {each_recursively_block.get()} шаблоном name={xpathes.recursively_structure_info['name']}")
 
             group_name = Get_text_by_xpath(each_recursively_block, xpathes.recursively_structure_info["name"])
             group_url = Get_text_by_xpath(each_recursively_block, xpathes.recursively_structure_info["url"])

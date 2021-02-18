@@ -47,6 +47,7 @@ class Xpathes():
                     "brend": "",
                     "collection": "",
                     "artikul": "",
+                    "description": "",
                     }
 
     # таблица характеристик продукта
@@ -55,6 +56,7 @@ class Xpathes():
                             "value": "",
                             "Separate_by_simbol": "",
                             "value_subselector": "",
+                            "postfix": "",
                             }
 
 
@@ -85,6 +87,8 @@ class Add_spider_settings():
     testing_product_page_url: str
 
     verify_ssl = False
+    use_selenium = False
+
 
     xpathes= Xpathes()
 
@@ -120,6 +124,8 @@ class Add_spider_settings():
 
         self.comment = "vogtrade_2020-08-23"
         self.version = "1.0.0"
+
+        self.use_selenium = False
 
         self.result_catalog = "l:\\\\_Важное\\6 Работа\\Python\\Grabbed_data\\vogceramic_ru" #f"{os.getcwd()}\\_outputs"
         self.result_files_subdir = f"results"
@@ -180,14 +186,16 @@ class Add_spider_settings():
                         "kod": "//div[text()='\u041a\u043e\u0434 \u0442\u043e\u0432\u0430\u0440\u0430:']/span/text()",
                         "brend": "//div[text()='\u0411\u0440\u0435\u043d\u0434:']/span/a/text()",
                         "collection": "",
-                        "artikul": "//div[text()='\u0410\u0440\u0442\u0438\u043a\u0443\u043b:']/span/text()"
+                        "artikul": "//div[text()='\u0410\u0440\u0442\u0438\u043a\u0443\u043b:']/span/text()",
+                        "description": ""
                         }
 
         #таблица характеристик продукта
         self.xpathes.product_specification_info = {
                                            "selector": "//table[@class='table ware-table']/tbody",
                                            "name": './/tr/td[1]/text()',
-                                            "value": './/tr/td[2]/text()'
+                                            "value": './/tr/td[2]/text()',
+                                            "postfix": "",
                                            }
 
 
@@ -200,6 +208,8 @@ class Add_spider_settings():
     def load_settings(self, path):
         with open(path, 'rb') as config_file:
             result_settings = json.load(config_file, object_hook=decode_json_dict_to_class)
+
+        #UNF_STR.print_fuksi(f"use selenium={self.use_selenium}")
 
         return result_settings
 
@@ -235,7 +245,7 @@ class CustomEncoder(json.JSONEncoder):
 
         # if isinstance(class_object, datetime):
         if isinstance(class_object, scrapy.Selector):
-            return {'__scrapy_selector__': "some selectors"}
+            return {'__scrapy_selector__': f"scrapy selector text={class_object.get()}" }
         elif isinstance(class_object, datetime.datetime):
             return {'__datetime__': class_object.replace(microsecond=0).isoformat()}
         else:

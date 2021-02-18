@@ -79,22 +79,19 @@ class SantehcentrComDownloaderMiddleware:
         return s
 
     def process_request(self, request, spider):
-        # UNF_STR.print_fuksi(f"---- process_request {request.url}---")
+        #UNF_STR.print_fuksi(f"---- process_request {request.url}---")
 
         # if ".ledeme.ru" in request.url:
         #     return None
+
+
         if True:
-            alternative_response = spider.alternative_upload_page(request.url)
-            body = alternative_response.text
-            scrapy_response = HtmlResponse(url=alternative_response.url, body=body, encoding='utf-8')
+            scrapy_response = spider.alternative_upload_page(request.url)
             return scrapy_response
 
+
         elif ".vogtrade.ru" in request.url:
-            # UNF_STR.print_fuksi(f"---- it is request to vogtrade.ru---  ")
-            alternative_response = spider.alternative_upload_page(request.url)
-            # UNF_STR.print_fuksi(f"---- it is request to vogtrade.ru---  ")
-            body = alternative_response.text
-            scrapy_response = HtmlResponse(url=alternative_response.url, body=body, encoding='utf-8')
+            scrapy_response = spider.alternative_upload_page(request.url)
             return scrapy_response
         else:
             return None

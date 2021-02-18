@@ -1,4 +1,5 @@
 import urllib.request
+from urllib.parse import urljoin
 
 import pytest
 from Universal_scrapy_app.Universal_scrapy.spiders.Universal_Spider import Universal_Spider
@@ -21,7 +22,7 @@ class Test_UniversalSpider():
     @pytest.fixture(scope="session", autouse=True)
     def spider(self):
         os.chdir('../../')
-        settings_filename = "settings_fleksi_ru.json"
+        settings_filename = "new_settings_santehnika_online_ru.json"
         res_spider = Universal_Spider(settings_filename)
         return res_spider
 
@@ -96,6 +97,7 @@ class Test_UniversalSpider():
         file_name = "Catalogs_object.json"
         spider.save_object_to_json_file(file_name, main_page_parser.catalogs)
 
+        #откроем файл программой по умолчанию
         catalog_path = spider.add_settings.get_result_files_path()
         file_path = os.path.join(catalog_path, file_name)
         webbrowser.open(file_path, new=0) ##new=2 Для новой вкладки
@@ -126,6 +128,7 @@ class Test_UniversalSpider():
             file_name = fake_group.name + "_object.json"
             spider.save_object_to_json_file(file_name, groupe_page_info)
 
+            # откроем файл программой по умолчанию
             file_path = os.path.join(spider.add_settings.get_result_files_path(), file_name)
             webbrowser.open(file_path, new=0)  ##new=2 Для новой вкладки
 
@@ -175,7 +178,15 @@ class Test_UniversalSpider():
         testing_product_page_url = spider.add_settings.testing_product_page_url
         for index, url in enumerate(testing_product_page_url):
             print(f"\n   - скачиваю страницу товара {url}")
-            scrapy_response = self.get_scrapy_response(url, spider)
+
+            spec_postfix = spider.add_settings.xpathes.product_specification_info['postfix']
+            UNF_STR.print_fuksi(f"   - spec_postfix={spec_postfix}")
+            if UNF_STR.is_empty(spec_postfix):
+                product_url_with_postfix = url
+            else:
+                product_url_with_postfix = urljoin(url, spec_postfix)
+
+            scrapy_response = self.get_scrapy_response(product_url_with_postfix, spider)
 
             fake_group = Catalog_group(number=index + 1, level=0, name=f"test_group_{index + 1}", url=url,
                                        domain_url=None, img_url=None, img_logo_url=None, sub_group_selectors=None)
@@ -274,36 +285,20 @@ class Test_UniversalSpider():
         else:
             page_file_name = f"{name}.html"
 
-        print(f"   - try to save product_item_page={page_file_name}")
-        UNF_OS.Save_text_to_file(page_file_name, spider.add_settings.get_saved_pages_path(),
-                                 pageText)
+        # print(f"   - try to save product_item_page={page_file_name}")
+        # UNF_OS.Save_text_to_file(page_file_name, spider.add_settings.get_saved_pages_path(),
+        #                          pageText)
 
-        product_page_file_path = os.path.join(spider.add_settings.get_saved_pages_path(), page_file_name)
-        webbrowser.open(product_page_file_path, new=0)  ##new=2 Для новой вкладки
+        #product_page_file_path = os.path.join(spider.add_settings.get_saved_pages_path(), page_file_name)
+        #webbrowser.open(product_page_file_path, new=0)  ##new=2 Для новой вкладки
 
 
 
     # ----- method - get_scrapy_response --------------------------------------------------------------------------
-    def get_scrapy_response(self, url, spider):
-
-        alternative_response = spider.alternative_upload_page(url)
-        body = alternative_response.text
-        scrapy_response = HtmlResponse(url=alternative_response.url, body=body, encoding='utf-8')
-
-
-        if alternative_response.status_code != 200:
-            self.stop_and_fail_test(f" загрузка страницы привела к неожиданному статусу {alternative_response.status_code}")
-        else:
-            #print(f"   - получил ответ {response.status_code}")
-            pass
-
-
-        if not alternative_response.status_code == 200:
-             pytest.fail(f"   - загрузка страницы дала ответ {alternative_response.status_code}")
-
-        #body = response.read()
-        scrapy_response = HtmlResponse(url=url, body=alternative_response.text, encoding='utf-8')
-        scrapy_selector = Selector(response=scrapy_response)
+    def get_scrapy_response(self, url, spider: Universal_Spider):
+        scrapy_response = spider.alternative_upload_page(url)
+        if spider.add_settings.use_selenium:
+            spider.close_selenium_driver()
 
         return(scrapy_response)
 

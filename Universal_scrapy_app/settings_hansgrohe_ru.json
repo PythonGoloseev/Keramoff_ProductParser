@@ -3,6 +3,8 @@
         "start_url_list": [
             "https://shop.hansgrohe.ru"
         ],
+        "use_selenium" : false,
+
         "result_catalog": "c:\\\\inetpub\\wwwroot\\Static_Default_Site\\parse\\hansgrohe_ru",
         "comment": "hansgrohe_ru_2020-09-14",
         "version": "1.0.0",
@@ -84,6 +86,7 @@
                     "description": ".//div[@class='description']/p/text()"
                 },
                 "product_specification_info": {
+                    "postfix": "",
                     "selector": "//div[@class='product-card__description-block']//dl/div",
                     "name": ".//dt/text()",
                     "value": "(.//dd//text())[1]",

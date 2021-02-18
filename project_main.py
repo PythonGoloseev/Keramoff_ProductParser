@@ -1,15 +1,17 @@
-# This is a sample Python script.
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-from scrapy.crawler import CrawlerRunner, CrawlerProcess
-from scrapy.settings import Settings
+import sys
+
+from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 
 from Universal_scrapy_app.Universal_scrapy.spiders.Universal_Spider import Universal_Spider
-from _UNF import String as UNF_STR
 
-import scrapy
+sys.path.insert(0, "l:\\_Важное\\6 Работа\\Python\\PyCharm\\UNF_Project\\")
+import UNF_SELENIUM
+import UNF_STRING
+import os
 
 
 def print_hi(name):
@@ -19,10 +21,9 @@ def print_hi(name):
 
 
 # Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+if False and __name__ == '__main__':
+    #print_hi('PyCharm')
 
-    from twisted.internet import reactor
     # import logging
     #
     # logging.basicConfig(
@@ -45,7 +46,7 @@ if __name__ == '__main__':
 
     process = CrawlerProcess(my_settings)
     #process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_centrsantehniki_com.json" )
-    process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_fleksi_ru.json" )
+    #process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_fleksi_ru.json" )
     #process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_hansgrohe_ru.json")
     #process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_ledeme_ru.json")
 
@@ -55,6 +56,11 @@ if __name__ == '__main__':
     #process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_vogceramic_ru.json")
     #process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/settings_vogtrade_ru.json")
 
+    process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/new_settings_santehnika_online_ru.json")
+    # process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/new_settings_keramogranit_ru.json")
+    # process.crawl(Universal_Spider, settings_file="./Universal_scrapy_app/new_settings_bestceramic_ru.json")
+    # new_settings_keramogranit_ru
+    # new_settings_bestceramic_ru
 
 
 

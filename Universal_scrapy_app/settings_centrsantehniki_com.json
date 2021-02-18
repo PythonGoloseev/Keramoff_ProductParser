@@ -3,6 +3,7 @@
         "start_url_list": [
             "http://santehcentr.com/"
         ],
+        "use_selenium" : false,
 
         "login_required": false,
         "login_url": "",
@@ -45,12 +46,12 @@
                     "sub_group_selectors": ".//div[@class='dropdown-menu']/ul/*",
                     "img_url": ""
                 },
-                "recursively_structure_blocks_xpath": "div[@class='dropdown-menu']/ul/li",
                 "recursively_structure_info": {
                     "name": "./a/text()",
                     "url": "./a/@href",
                     "sub_group_selectors": "./li/*"
                 },
+                "recursively_structure_blocks_xpath": "div[@class='dropdown-menu']/ul/li",
                 "group_page_slave_groups_xpath": {
                     "selectors": "",
                     "name": "",
@@ -83,9 +84,11 @@
                     "kod": "//div[text()='\u041a\u043e\u0434 \u0442\u043e\u0432\u0430\u0440\u0430:']/span/text()",
                     "brend": "//div[text()[contains(.,'Бренд')]]/span/a/text()",
                     "collection": "",
-                    "artikul": "//div[text()[contains(.,'Артикул')]]/span/text()"
+                    "artikul": "//div[text()[contains(.,'Артикул')]]/span/text()",
+                    "description": ""
                 },
                 "product_specification_info": {
+                    "postfix": "",
                     "selector": "//table[@class='table ware-table']/tbody",
                     "name": ".//tr/td[1]/text()",
                     "value": ".//tr/td[2]/text()",

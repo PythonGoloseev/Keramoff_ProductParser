@@ -43,6 +43,8 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
     custom_settings = {
         'ROBOTSTXT_OBEY': False,
         'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/78.0',
+        #'USER_AGENT': 'Googlebot',
+
         'FEEDS':{
             #'file:e:///Temp/_Spider/%(name)s_new_output.xml':
             'file:%(output_catalog)s/%(name)s_xml_data.xml':
@@ -64,41 +66,7 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
         }
 
 
-    # def login(self, response):
-    #
-    #     my_login_url = self.add_settings.login_url
-    #     my_login = self.add_settings.login
-    #     my_password = self.add_settings.password
-    #
-    #     UNF_STR.print_fuksi(f"   выполняю попытку авторизации my_login_url={my_login_url} login={my_login}   password={my_password}")
-    #
-    #     my_form_data = {'user': my_login, 'password': my_password,
-    #                                         "authenticity_token": response.xpath(
-    #                                             "//meta[@name='csrf-token']/@content").extract_first()}
-    #
-    #     result = scrapy.FormRequest(url=my_login_url, encoding="ascii",
-    #                               headers={"X-Requested-With": "XMLHttpRequest"},
-    #                               formdata=my_form_data,
-    #                               callback=self.parse, dont_filter=True)
-    #
-    #     return  result
 
-    # def start_requests(self):
-    #
-    #     if UNF_STR.is_empty(self.add_settings.login_url):
-    #         UNF_STR.print_yellow("Авторизация на сайте не применяется")
-    #     else:
-    #         UNF_STR.print_fuksi("   выполняю попытку авторизации")
-    #         pass
-    #
-    #
-    #     result = FormRequest(
-    #             self.add_settings.login_url,
-    #             formdata={"Username": self.add_settings.login, "Password": self.add_settings.password}
-    #         )
-    #
-    #     UNF_STR.print_fuksi(f"result type={type(result)}")
-    #     return result
 
     #--------------------------------------------------------------------------------------------------------------------------
     #--------------------------------------------------------------------------------------------------------------------------

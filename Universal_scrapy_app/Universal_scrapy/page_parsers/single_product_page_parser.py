@@ -78,8 +78,8 @@ class Single_product_page_parser():
 
         product_info_Selector = response.xpath(xpathes.product_info['selectors'])
         # print(product_info_Selector.extract_first())
-
-
+        UNF_OS.Save_text_to_file("single_product_selector.html", self.__spider.add_settings.get_saved_pages_path(),
+                                 product_info_Selector.extract_first())
 
         product_scrapy_item['type_Card'] = "full_info_from_product_card"
 
@@ -103,7 +103,23 @@ class Single_product_page_parser():
             # print(f" dict key={key}, xpath={xpath}")
             value = Get_text_by_xpath(product_info_Selector, xpath)
             self.__spider.debug_print(f"         - распарсил {key}={value}")
+
+            #UNF_STR.print_fuksi(f"         - распарсил {key}={value}")
+            if key == "artikul" or key == "kod":
+                value = value.replace("Код: ", "")
+                value = value.replace("Код:", "")
+                value = value.replace("Артикул: ", "")
+                value = value.replace("Артикул:", "")
+                value = value.replace("Артикул", "")
+                #UNF_STR.print_fuksi(f"         - обрезал {key}={value}")
+
+            value = value.strip()
+
+
             product_scrapy_item[key] = value
+
+
+
 
             # if key == "img_url":
             #     UNF_STR.print_fuksi(f"{key}={value} xpath={xpath}")
@@ -111,6 +127,14 @@ class Single_product_page_parser():
             #                              product_info_Selector.extract_first())
 
         product_scrapy_item["full_url"] = response.url
+
+        #file_name = "specif_page.html"
+        #UNF_STR.print_fuksi(f"   - response.url={response.url}")
+        # UNF_STR.print_fuksi(f"   - try to save product_item_page={file_name}")
+        # UNF_OS.Save_text_to_file(file_name, self.__spider.add_settings.get_saved_pages_path(),
+        #                          response.text)
+
+        #UNF_STR.print_fuksi(f"spec selector {xpathes.product_specification_info['selector']}")
 
         specification_selectors = response.xpath(xpathes.product_specification_info['selector'])
         self.__spider.debug_print(f"         - нашел {len(specification_selectors)} селекторов спецификаций")
@@ -180,7 +204,6 @@ class Single_product_page_parser():
 
             if len(specifications_name_list) != len(specifications_value_list):
                 self.__spider.RaiseErrorMessage(f"не совпали длины список name/value в таблице спецификаций. Длина {len(specifications_name_list)} против {len(specifications_value_list)}", response_url)
-                #print("ОШБИКА не совпали длины список name/value в таблице спецификаций " + response_url)
             else:
                 # print(f"      - в очередном блоке нашел {len(specifications_name_list)} name/value характеристики")
                 pass

@@ -196,10 +196,15 @@ class Group_page_parser():
                 yield Product_item
             else:
                 # запустим парсинг страницы товара
-
+                spec_postfix = self.__spider.add_settings.xpathes.product_specification_info['postfix']
+                #UNF_STR.print_fuksi(f"   - spec_postfix={spec_postfix}")
+                if UNF_STR.is_empty(spec_postfix):
+                    product_url_with_postfix = each_product.url
+                else:
+                    product_url_with_postfix = urljoin(each_product.url, spec_postfix)
 
                 single_product_page_parser = Single_product_page_parser(self.__spider)
-                new_response = response.follow(each_product.url,
+                new_response = response.follow(product_url_with_postfix,
                                                callback=single_product_page_parser.async_upload_and_parse)
                 # new_response.meta['current_group'] = current_group
                 new_response.meta['product_from_list'] = each_product

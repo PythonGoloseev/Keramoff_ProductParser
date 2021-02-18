@@ -3,6 +3,8 @@
         "start_url_list": [
             "https://fleksi.ru/catalog/"
         ],
+        "use_selenium" : false,
+
         "result_catalog": "c:\\\\inetpub\\wwwroot\\Static_Default_Site\\parse\\fleksi_ru",
         "comment": "fleksi_2020-10-29",
         "version": "1.0.0",
@@ -46,12 +48,12 @@
                     "sub_group_selectors": "",
                     "img_url": ""
                 },
-                "recursively_structure_blocks_xpath": "",
                 "recursively_structure_info": {
                     "name": "",
                     "url": "",
                     "sub_group_selectors": ""
                 },
+                "recursively_structure_blocks_xpath": "",
                 "group_page_slave_groups_xpath": {
                     "selectors": "//div[@class='catalog-section-list']//a[@class='catalog-section-item']",
                     "name": "@title",
@@ -83,9 +85,11 @@
                     "kod": ".//div[@class='product-item-detail-article']/span/text()",
                     "brend": ".//div[@class='product-item-detail-properties-container']//div[@class='product-item-detail-properties'][div[contains(.,'Бренд')]]/div[2]/a/text()\n",
                     "collection": ".//div[@class='product-item-detail-properties-container']//div[@class='product-item-detail-properties'][div[contains(.,'Коллекция')]]/div[2]//text()\n",
-                    "artikul": ""
+                    "artikul": "",
+                    "description": ""
                 },
                 "product_specification_info": {
+                    "postfix": "",
                     "selector": "//div[@class='product-item-detail-properties-block']",
                     "name": ".//div[@class='product-item-detail-properties']/div[@class='product-item-detail-properties-name']/text()",
                     "value": ".//div[@class='product-item-detail-properties']/div[@class='product-item-detail-properties-val']",

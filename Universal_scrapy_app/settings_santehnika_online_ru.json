@@ -1,0 +1,111 @@
+{
+    "__Add_spider_settings__": {
+        "start_url_list": [
+            "https://santehnika-online.ru/catalog/"
+        ],
+        "use_selenium" : true,
+
+
+
+        "login_required": false,
+        "login_url": "",
+        "login_formdata": {"USER_LOGIN": "",
+                      "USER_PASSWORD": "",
+                      "backurl": "",
+                      "AUTH_FORM": "Y",
+                      "TYPE": "AUTH"
+                      },
+
+
+        "testing_group_page_url": [
+            "https://santehnika-online.ru/vanny/"
+        ],
+
+        "testing_product_page_url": [
+            "https://santehnika-online.ru/product/dushevoy_komplekt_orange_mia_m34_933b_chernyy/"
+        ],
+
+        "comment": "santehnika-online_2021-02-16",
+        "version": "1.0.0",
+        "result_catalog": "c:\\\\inetpub\\wwwroot\\Static_Default_Site\\parse\\santehnika-online_ru",
+        "result_files_subdir": "results",
+        "saved_pages_subdir": "pages",
+        "saved_images_subdir": "images",
+        "need_to_save_pages": false,
+        "show_debug_messages": false,
+        "need_to_upload_images": true,
+        "filter_groups_only_url": "",
+        "Read_Only_List_Without_SingleProductPages": false,
+        "stop_after_number_of_products_on_page": 0,
+        "stop_after_number_of_groups": 0,
+        "xpathes": {
+            "__Xpathes__": {
+                "structure_selector_xpath": "//div[@data-name='CatalogGeneralCategories']",
+                "root_structure_groups_xpath": "./div/div/div[@class='p-catalog-general-b-categories__supercategory']",
+
+                "root_structure_info": {
+                    "name": "a/text()",
+                    "url": "a/@href",
+                    "sub_group_selectors": "./div[@class='p-catalog-general-b-categories__supercategory-items']/a",
+                    "img_url": ""
+                },
+
+                "recursively_structure_info": {
+                    "name": "text()[1]",
+                    "url": "@href[1]",
+                    "sub_group_selectors": ""
+                },
+
+                "recursively_structure_blocks_xpath": "",
+                "group_page_slave_groups_xpath": {
+                    "selectors": "",
+                    "name": "",
+                    "url": "",
+                    "img_url": "",
+                    "img_logo_url": ".//img[@class='tile__img']/@src"
+                },
+                "group_page_pagination_other_pages_xpath": "//div[@class='b-pagination__item']/a/@href",
+
+                "group_page_pagination_next_page_xpath": "",
+
+                "group_page_product_xpath": {
+                    "selectors": "//section//div[@class='b-catalog-products__list-item']",
+
+                    "name_part1": ".//div[@class='b-preview-product__main']/a/span/span/span[1]/text()",
+                    "name_part2": ".//div[@class='b-preview-product__main']/a/span/span/span[2]/text()",
+                    "name_part3": ".//div[@class='b-preview-product__main']/a/span/span/span[3]/text()",
+                    "url": ".//div[@class='b-preview-product__main']/a/@href",
+                    "img_url": ".//div[@class='b-preview-product__header']/a/img/@src",
+                    "available_quantity": "",
+                    "reserv_quantity": "",
+                    "price": ".//div[contains(@class,'b-price__price--main')]//meta[@itemprop='price']/@content"
+                },
+
+
+                "product_info": {
+                    "selectors": "//div[@class='p-card-single']",
+                    "name_part1": "./div//h1[@class='p-card-single-b-info__title']/text()",
+                    "name_part2": "",
+                    "name_part3": "",
+                    "img_url": "./div//div[@class='p-card-single-b-media-details-slider-item']/img/@src",
+                    "currency": "",
+                    "price": "./div//div[@class='p-card-single-b-prices__result-price']//span[@class='b-price__price-core']/text()",
+                    "kod": "./div//div[@class='p-card-single-b-info__code']/text()",
+                    "brend": "./div//div[@class='property-item'][div/span/text()[contains(.,'Бренд')]]/div[@class='property-item-value']/a/text()",
+                    "collection": "./div//div[@class='property-item'][div/span/text()[contains(.,'Коллекция')]]/div[@class='property-item-value']/a/text()\n\n\n",
+                    "artikul": "./div//div[@class='p-card-single-b-info__code']/text()",
+                    "description": ""
+
+                },
+                "product_specification_info": {
+                    "postfix": "#specs",
+                    "selector": "//div[@class='card-specs-section']//div[@class='group-item']",
+                    "name": "./div/span[@class='group-item-title']/span/text()",
+                    "value": "./div//span[@class='group-item-value']//text()[1]",
+                    "value_subselector": "",
+                    "Separate_by_simbol": ""
+                }
+            }
+        }
+    }
+}

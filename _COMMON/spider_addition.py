@@ -1,6 +1,13 @@
 import json
 import os
 import configparser
+from datetime import datetime
+
+import sys
+
+sys.path.insert(0, "l:\\_Важное\\6 Работа\\Python\\PyCharm\\UNF_Project\\")
+import UNF_STRING
+import UNF_SELENIUM
 from _COMMON.add_settings import Add_spider_settings, CustomEncoder
 import urllib3
 
@@ -16,7 +23,9 @@ sys_path += [os.path.abspath('../')] # подключаем каталог вы�
 #print(f"подключаю папку: {os.path.abspath('../')}")
 from _UNF import OS as UNF_OS
 from _UNF import String as UNF_STR
-from scrapy.http import FormRequest
+
+import UNF_URL
+from scrapy.http import FormRequest, HtmlResponse
 
 
 #import httplib2
@@ -50,6 +59,8 @@ class Spider_addition():
     add_settings = Add_spider_settings()
 
     alternative_sesion = None
+    alternative_selenium_driver = None
+
     start_time: None
     finish_time: None
     duration: None
@@ -170,6 +181,7 @@ class Spider_addition():
             os.remove(path_to_summary)
 
     def save_progress_file(self):
+        self.duration = int((datetime.now() -self.start_time).total_seconds()/60)
         self.save_object_to_json_file(self.get_progress_file_name(), self.get_sprider_summary())
 
     def get_abs_path(self, img_rel_path):
@@ -198,10 +210,10 @@ class Spider_addition():
 
         self.debug_print(f"      - сохраняю {img_full_url}  в файл {rel_path}")
 
-        img_response = self.alternative_upload_page(img_full_url)
+        img_response = self.upload_url_by_request_object(img_full_url)
         content = img_response.content
         # if ".vogtrade.ru" in img_full_url:
-        #     img_response = self.alternative_upload_page(img_full_url)
+        #     img_response = self.upload_url_by_request_object(img_full_url)
         #     content = img_response.content
         # else:
         #     #обычный алгоритм
@@ -260,19 +272,36 @@ class Spider_addition():
         pass
 
 
-    def alternative_upload_page(self, url):
+    def upload_page_by_selenium(self, url:str) -> str:
 
+        if self.alternative_selenium_driver == None:
+            web_driver = UNF_SELENIUM.getdriver_chrome(headless=False)
+            self.alternative_selenium_driver = web_driver
+
+        web_driver = self.alternative_selenium_driver
+        web_driver.get(url)
+
+        res_html = web_driver.page_source
+        #UNF_STRING.print_blue(res_html)
+        return res_html
+
+    def close_selenium_driver(self,):
+        if self.alternative_selenium_driver != None:
+            self.alternative_selenium_driver.close()
+            self.alternative_selenium_driver.quit()
+
+
+
+    def upload_url_by_request_object(self, url):
         if self.alternative_sesion == None:
-            #UNF_STR.print_fuksi(f"   - создаю новую alternative_sesion")
+            # UNF_STR.print_fuksi(f"   - создаю новую alternative_sesion")
             self.alternative_sesion = requests.Session()
-            self.alternative_sesion.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0'})
-
+            self.alternative_sesion.headers.update(
+                {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0'})
 
             if self.add_settings.login_required:
-                #UNF_STR.print_fuksi("   вижу потребность авторизоваться ")
+                # UNF_STR.print_fuksi("   вижу потребность авторизоваться ")
                 self.login()
-
-
 
         session = self.alternative_sesion
 
@@ -282,8 +311,11 @@ class Spider_addition():
         verify_ssl = self.add_settings.verify_ssl
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+        # if "santehnika-online.ru" in url:
+        #     UNF_STR.print_fuksi(f"---session.headers.host={session.geaders.host}")
+
         try:
-            response = session.get(url, data = data, verify = verify_ssl)
+            response = session.get(url, data=data, verify=verify_ssl)
         except requests.exceptions.HTTPError:
             response = None
             UNF_STR.print_fuksi(f"Ошибка загрузки HTTPError url={url}")
@@ -297,19 +329,35 @@ class Spider_addition():
             response = None
             UNF_STR.print_fuksi(f"Ошибка загрузки прочие RequestException url={url}")
         finally:
-            if response==None:
+            if response == None:
                 UNF_STR.print_fuksi(f"неудачная попытка загрузки {url}")
             elif response.status_code != 200:
                 self.failed_upload_urls_dict[response.url] = response.status_code
                 UNF_STR.print_fuksi(f"загрузка страницы вернула плохой код ответа {response.status_code}  url={url}")
             else:
-                #UNF_STR.print_yellow(f"      - страница успешно альтернативно загружана  url={url}")
+                # UNF_STR.print_yellow(f"      - страница успешно альтернативно загружана  url={url}")
                 pass
 
         response.encoding = 'utf-8'
-
         return response
 
+    #----------------------------------------------------------------------------------------------------------------------------------------------
+    #----------------------------------------------------------------------------------------------------------------------------------------------
+    def alternative_upload_page(self, url):
+
+        if UNF_URL.URL_is_HTML_page(url) and self.add_settings.use_selenium:
+            #UNF_STR.print_fuksi(f"USING SELENIUM FOR URL={url}")
+            body_html = self.upload_page_by_selenium(url)
+        else:
+            #UNF_STR.print_fuksi(f"USING REQUEST FOR URL={url}")
+            request_response = self.upload_url_by_request_object(url)
+            body_html = request_response.text
+
+        scrapy_response = HtmlResponse(url=url, body=body_html, encoding='utf-8')
+        return scrapy_response
+
+    # ----------------------------------------------------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------------------------------------------------------
     def remove_background_prefix(self, img_url):
         if UNF_STR.is_empty(img_url):
             return("")
