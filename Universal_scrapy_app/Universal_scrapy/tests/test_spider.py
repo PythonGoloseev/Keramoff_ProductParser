@@ -10,10 +10,10 @@ from Universal_scrapy_app.Universal_scrapy.page_parsers.group_page_parser import
 
 from scrapy.selector import Selector
 from scrapy.http import HtmlResponse
-from _UNF import String as UNF_STR
+import UNF_STRING
 import ssl
 from Universal_scrapy_app.Universal_scrapy.items import *
-from _UNF import OS as UNF_OS
+import UNF_OS
 import requests
 import webbrowser
 

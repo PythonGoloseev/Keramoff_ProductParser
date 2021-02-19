@@ -4,7 +4,7 @@ from sys import path as sys_path #im naming it as pylib so that we won't get con
 from scrapy.http import HtmlResponse
 
 sys_path += [os.path.abspath('../')] # подключаем каталог выше запущенного корневого скрипта scrapy на уровень
-from _UNF import String as UNF_STR
+import UNF_STRING
 import requests
 
 # Define here the models for your spider middleware

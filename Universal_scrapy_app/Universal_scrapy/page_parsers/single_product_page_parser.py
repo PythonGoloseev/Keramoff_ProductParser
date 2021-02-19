@@ -1,11 +1,11 @@
 from urllib.parse import urljoin
 
 from Universal_scrapy_app.Universal_scrapy.items import  Product_scrapy_item
-from _UNF import OS as UNF_OS
+import UNF_OS
 from Universal_scrapy_app.Universal_scrapy.items import Url_page
 from Universal_scrapy_app.Universal_scrapy.items import Specification
-import _UNF.URLs as UNF_URLs
-import _UNF.String as UNF_STR
+import UNF_URL
+import UNF_STRING
 
 from Universal_scrapy_app.Universal_scrapy.items import get_rel_path_to_img_from_url
 from _COMMON.spider_addition import Get_text_by_xpath
@@ -56,7 +56,7 @@ class Single_product_page_parser():
         product_from_list = response.meta['product_from_list']
 
         # if self.__spider.add_settings.need_to_save_pages:
-        #     product_list_file_name = "single_product_" + UNF_URLs.convert_url_to_file_name(product_from_list.url) + ".html"
+        #     product_list_file_name = "single_product_" + UNF_URL.convert_url_to_file_name(product_from_list.url) + ".html"
         #     # print(f"   - try to save product_item_page={product_list_file_name}")
         #     UNF_OS.Save_text_to_file(product_list_file_name, self.__spider.add_settings.get_saved_pages_path(), response.text)
 
@@ -150,10 +150,10 @@ class Single_product_page_parser():
 
 
         #загрузка картинки товара
-        product_scrapy_item['uploaded_img_rel_path'] = get_rel_path_to_img_from_url("single_product_img_", product_scrapy_item['img_url'], product_from_list.group)
+        product_scrapy_item['uploaded_img_rel_path'] = get_rel_path_to_img_from_url("single_product_img_", product_scrapy_item['img_url'], product_from_list.group_page_info.url)
 
         if self.__spider.add_settings.need_to_upload_images and product_scrapy_item['img_url'] != None and product_scrapy_item['img_url'].strip() != "":
-            domain_url = UNF_URLs.get_base_domain(response.url)
+            domain_url = UNF_URL.get_base_domain(response.url)
             full_img_url = urljoin(domain_url + "/", product_scrapy_item['img_url'])
             img_abs_path = self.__spider.get_abs_path(product_scrapy_item['uploaded_img_rel_path'])
             self.__spider.upload_img_if_not_exists(full_img_url, img_abs_path)

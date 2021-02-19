@@ -5,7 +5,7 @@ from pprint import pprint
 import datetime
 import scrapy
 
-from _UNF import String as UNF_STR
+import UNF_STRING
 
 class Xpathes():
     structure_selector_xpath = ""

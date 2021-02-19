@@ -8,11 +8,10 @@ import os
 from sys import path as sys_path #im naming it as pylib so that we won't get confused between os.path and sys.path
 sys_path += [os.path.abspath('../')] # подключаем каталог выше запущенного корневого скрипта scrapy на уровень
 
-import _UNF.URLs as UNF_URLs
+import UNF_URL
+import UNF_OS
+import UNF_STRING
 
-from _UNF import OS as UNF_OS
-
-import _UNF.String as UNF_STR
 from _COMMON.spider_addition import Get_text_by_xpath
 
 
@@ -28,7 +27,7 @@ class Main_Page_Parser():
         self.url = response.url;
         self.response = response
         self.catalogs.clear()
-        self.domain_url = UNF_URLs.get_base_domain(response.url)
+        self.domain_url = UNF_URL.get_base_domain(response.url)
 
 
 
@@ -37,17 +36,17 @@ class Main_Page_Parser():
         xpath = xpathes.structure_selector_xpath
 
         # original_body = response.body
-        # UNF_STR.print_fuksi(f"original body type={type(original_body)} ")
+        # UNF_STRING.print_fuksi(f"original body type={type(original_body)} ")
         # original_body_str = original_body.decode("utf-8")
         #
         # del_str = "http://www.w3.org/2000/svg"
         # new_body_str = original_body_str.replace(del_str, "-AAA-")
-        # UNF_STR.print_fuksi(f"del_str={del_str}")
-        # UNF_STR.print_blue(response.text)
+        # UNF_STRING.print_fuksi(f"del_str={del_str}")
+        # UNF_STRING.print_blue(response.text)
         #
         # new_body = new_body_str.encode('utf-8')
         # clear_response = response.replace(body=new_body)
-        # UNF_STR.print_fuksi(f"len original={len(original_body_str)}   clear_len={len(new_body_str)}")
+        # UNF_STRING.print_fuksi(f"len original={len(original_body_str)}   clear_len={len(new_body_str)}")
         # response = clear_response
 
         structure_block_Selectors = response.xpath(xpath)
@@ -91,11 +90,11 @@ class Main_Page_Parser():
             spider.debug_print(f"      - обнаружил корневую группу name={group_name} url={group_url}")
 
             group_logo_url = None
-            if UNF_STR.is_empty(sub_group_selectors_xpath):
+            if UNF_STRING.is_empty(sub_group_selectors_xpath):
                 group_sub_group_selectors = None
             else:
                 group_sub_group_selectors = each_root_block.xpath(sub_group_selectors_xpath)
-                #UNF_STR.print_fuksi(f"в корневой группе {group_name} результат поиска вложенных подгрупп длинной {len(group_sub_group_selectors)}")
+                #UNF_STRING.print_fuksi(f"в корневой группе {group_name} результат поиска вложенных подгрупп длинной {len(group_sub_group_selectors)}")
 
             # print(f"********** Нашел корневую группу Name = {group_name} url = {group_url}")
 
@@ -107,7 +106,7 @@ class Main_Page_Parser():
 
             if group_sub_group_selectors:
                 self.recursively_parse_sub_group_selectors_and_append_slave_groups(catalog, spider, level)
-                #UNF_STR.print_fuksi(f"!!!!! у корневой группы {catalog.name} + нашел {len(catalog.slave_catalogs)} подчиненных подкаталогов")
+                #UNF_STRING.print_fuksi(f"!!!!! у корневой группы {catalog.name} + нашел {len(catalog.slave_catalogs)} подчиненных подкаталогов")
 
             self.catalogs.append(catalog)
 
@@ -129,29 +128,29 @@ class Main_Page_Parser():
 
         xpathes = spider.add_settings.xpathes
 
-        # UNF_STR.print_fuksi(f"sub_group_selectors")
+        # UNF_STRING.print_fuksi(f"sub_group_selectors")
         # pprint.pprint(parent_catalog.sub_group_selectors)
 
         tab = "   "*level
         if parent_catalog.sub_group_selectors == None or len(parent_catalog.sub_group_selectors) == 0:
-            # UNF_STR.print_black(
+            # UNF_STRING.print_black(
             #     f"   {tab} -у родителя {parent_catalog.name}   нет вложеных подгрупп {level} уровня")
             return
         else:
-            # UNF_STR.print_fuksi(
+            # UNF_STRING.print_fuksi(
             #     f"   {tab} - у родителя {parent_catalog.name} вложено {len(parent_catalog.sub_group_selectors)} подгрупп {level} уровня")
             pass
 
         for index, each_recursively_block in enumerate(parent_catalog.sub_group_selectors):
 
-            #UNF_STR.print_fuksi(f"  - исследую блок {each_recursively_block.get()} шаблоном name={xpathes.recursively_structure_info['name']}")
+            #UNF_STRING.print_fuksi(f"  - исследую блок {each_recursively_block.get()} шаблоном name={xpathes.recursively_structure_info['name']}")
 
             group_name = Get_text_by_xpath(each_recursively_block, xpathes.recursively_structure_info["name"])
             group_url = Get_text_by_xpath(each_recursively_block, xpathes.recursively_structure_info["url"])
             group_img_url = None
             group_img_logo_url = None
 
-            if not UNF_STR.is_empty(xpathes.recursively_structure_info["sub_group_selectors"]):
+            if not UNF_STRING.is_empty(xpathes.recursively_structure_info["sub_group_selectors"]):
                 sub_group_selectors = each_recursively_block.xpath(xpathes.recursively_structure_info["sub_group_selectors"])
             else:
                 sub_group_selectors = None
@@ -159,7 +158,7 @@ class Main_Page_Parser():
             # page_name = parent_catalog.name + "_sub_group_" + str(index+1)  + "_" + group_name + ".html"
             # UNF_OS.Save_text_to_file(page_name, spider.add_settings.get_saved_pages_path(),
             #                           each_recursively_block.extract())
-            # UNF_STR.print_fuksi(f"  - {page_name} name={group_name}  url={group_url}  xpath={xpathes.recursively_structure_info['name']} has {len(sub_group_selectors)} downlevel groups")
+            # UNF_STRING.print_fuksi(f"  - {page_name} name={group_name}  url={group_url}  xpath={xpathes.recursively_structure_info['name']} has {len(sub_group_selectors)} downlevel groups")
 
             catalog = Catalog_group(number=index + 1, level=level, name=group_name, url=group_url,
                                     domain_url=self.domain_url, img_url=group_img_url, img_logo_url=group_img_logo_url,

@@ -4,8 +4,8 @@
 # https://docs.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-from _UNF import URLs as UNF_URLs
-from _UNF import String as UNF_STR
+import UNF_URL
+import UNF_STRING
 
 
 class Catalog_item(scrapy.Item):
@@ -109,7 +109,7 @@ class Product_from_list_page():
     price: str
     list_page_full_url: str
     number_on_page: int
-    group = "" #StructureGroup()
+    group_page_info = None
     available_quantity: str
     reserv_quantity = str
 
@@ -124,7 +124,7 @@ class Product_from_list_page():
         self.list_page_full_url = list_page_full_url
         self.number_on_page = number_on_page
         self.group = group
-        self.uploaded_img_rel_path = get_rel_path_to_img_from_url("img_logo_", self.img_url, self.group)
+        self.uploaded_img_rel_path = get_rel_path_to_img_from_url("img_logo_", self.img_url, self.group_page_info.url)
         self.available_quantity = available_quantity
         self.reserv_quantity = reserv_quantity
 
@@ -143,7 +143,7 @@ class Product_from_list_page():
         return(res_str)
 
 #-----------------------------------------------------------------------------------------------------------------
-class Group_page_info:
+class Group_page_info():
     url: str
     name: str
     title: str
@@ -155,6 +155,11 @@ class Group_page_info:
 
     def __init__(self, url):
         self.url = url
+        # self.name = url
+        # self.title = None
+
+    def __str__(self):
+        return f"group_page_info url={self.url} "
 
 #-----------------------------------------------------------------------------------------------------------------
 class Product_scrapy_item(scrapy.Item):
@@ -214,17 +219,17 @@ class Product_scrapy_item(scrapy.Item):
 
 
 #-----------------------------------------------------------------------------------------------------------------
-def get_rel_path_to_img_from_url(prefiks, img_url, group):
+def get_rel_path_to_img_from_url(prefiks, img_url, group_page_url):
 
     if img_url == None:
         return None
 
-    sub_catalog = UNF_URLs.convert_url_to_file_name(group.url)
+    sub_catalog = UNF_URL.convert_url_to_file_name(group_page_url)
 
     if sub_catalog != None and sub_catalog.strip() != "":
-        img_rel_path = sub_catalog + "\\" + prefiks + UNF_URLs.convert_url_to_file_name(img_url)
+        img_rel_path = sub_catalog + "\\" + prefiks + UNF_URL.convert_url_to_file_name(img_url)
     else:
-        img_rel_path = "other_images_" + UNF_URLs.convert_url_to_file_name(img_url)
+        img_rel_path = "other_images_" + UNF_URL.convert_url_to_file_name(img_url)
 
     return (img_rel_path)
 

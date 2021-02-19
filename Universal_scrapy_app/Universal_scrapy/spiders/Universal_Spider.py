@@ -4,16 +4,18 @@ from urllib.parse import urljoin
 import os
 from sys import path as sys_path #im naming it as pylib so that we won't get confused between os.path and sys.path
 sys_path += [os.path.abspath('../')] # подключаем каталог выше запущенного корневого скрипта scrapy на уровень
-from _UNF import String as UNF_STR
+import sys
+sys.path.insert(0, "l:\\_Важное\\6 Работа\\Python\\PyCharm\\UNF_Project\\")
+import UNF_STRING
 import scrapy
 from scrapy import signals
 from _COMMON.spider_addition import Spider_addition
 from _COMMON.spider_addition import Crawling_Page
-from _UNF import OS as UNF_OS
+import UNF_OS
 from Universal_scrapy_app.Universal_scrapy.page_parsers.main_page_parser import Main_Page_Parser
 from Universal_scrapy_app.Universal_scrapy.items import Catalog_item
 from Universal_scrapy_app.Universal_scrapy.page_parsers.group_page_parser import Group_page_parser
-import _UNF.URLs as UNF_URLs
+import UNF_URL
 import datetime
 from scrapy.http import Request
 
@@ -112,34 +114,35 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
 
             # проверим не превышено ли ограничение на количество загружаемых групп
             if  groups_limit != None and groups_limit > 0 and len(self.requested_groups_dict)>=groups_limit:
-                UNF_STR.print_fuksi(f"   (!) Прекратил запрос остальных групп, потому как достиг ограничения количества загружаемых групп {groups_limit}")
+                UNF_STRING.print_fuksi(f"   (!) Прекратил запрос остальных групп, потому как достиг ограничения количества загружаемых групп {groups_limit}")
                 break
 
-            domain_url = UNF_URLs.get_base_domain(response.url)
-            products_page_fullurl = urljoin(domain_url + "/", each_group_url)
+            domain_url = UNF_URL.get_base_domain(response.url)
+            lower_group_page_fullurl = urljoin(domain_url + "/", each_group_url)
             cur_catalog = lower_catalogs_dict[each_group_url]
 
 
 
-            if not UNF_STR.is_empty(self.add_settings.filter_groups_only_url) and \
-                    cur_catalog.url != self.add_settings.filter_groups_only_url and products_page_fullurl != self.add_settings.filter_groups_only_url:
-                    self.debug_print(f"      - пропускаю {products_page_fullurl} потому как она не совпала с фильтром {self.add_settings.filter_groups_only_url}")
-                    self.cancelled_pages.append(products_page_fullurl)
+            if not UNF_STRING.is_empty(self.add_settings.filter_groups_only_url) and \
+                    cur_catalog.url != self.add_settings.filter_groups_only_url and lower_group_page_fullurl != self.add_settings.filter_groups_only_url:
+                    self.debug_print(f"      - пропускаю {lower_group_page_fullurl} потому как она не совпала с фильтром {self.add_settings.filter_groups_only_url}")
+                    self.cancelled_pages.append(lower_group_page_fullurl)
                     continue
 
             #print(f"отправляю команду на открытие {index+1} группы нижнего уровня {cur_catalog.name}  url={cur_catalog.url}")
 
-            self.debug_print(f"      - запускаю асинхронное чтение {group_number} страницы {cur_catalog.name}  url={products_page_fullurl}")
+            self.debug_print(f"      - запускаю асинхронное чтение {group_number} страницы {cur_catalog.name}  url={lower_group_page_fullurl}")
 
-            self.requested_groups_dict[products_page_fullurl] = products_page_fullurl
+            self.requested_groups_dict[lower_group_page_fullurl] = lower_group_page_fullurl
 
             group_page_parser = Group_page_parser(self)
-            new_response = response.follow(products_page_fullurl, callback=group_page_parser.async_group_upload)
-            new_response.meta['current_group'] = cur_catalog
+            new_response = response.follow(lower_group_page_fullurl, callback=group_page_parser.async_group_upload)
+            new_response.meta['parent_group'] = cur_catalog
             new_response.meta['spider'] = self
             new_response.meta['its_pagination_follow'] = False
             yield new_response
 
+        #все группы пройдены....
 
     # --------------------------------------------------------------------------------------------------------------------------
     def recursively_get_lower_catalogs_to_dict(self, catalogs):
@@ -192,7 +195,7 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
 
 
         print(f"-----------------------------CLOSED-----------------------------------------")
-        UNF_STR.print_blue(f"ИТОГО: ПОТРАЧЕНО {self.duration} МИНУТ")
+        UNF_STRING.print_blue(f"ИТОГО: ПОТРАЧЕНО {self.duration} МИНУТ")
 
         self.show_cancelled_pages()
         self.show_uploaded_groups()
@@ -209,24 +212,24 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
 
     def show_cancelled_pages(self):
         if len(self.cancelled_pages)>0:
-            UNF_STR.print_fuksi(f"ИТОГО (ВНИМАНИЕ!!!): ПРОПУЩЕНО {len(self.cancelled_pages)} ГРУПП ИЗ-ЗА ФИЛЬТА filter_groups_only_url={self.add_settings.filter_groups_only_url}")
+            UNF_STRING.print_fuksi(f"ИТОГО (ВНИМАНИЕ!!!): ПРОПУЩЕНО {len(self.cancelled_pages)} ГРУПП ИЗ-ЗА ФИЛЬТА filter_groups_only_url={self.add_settings.filter_groups_only_url}")
 
     def show_errors(self):
         if len(self.error_messages)>0:
 
-            UNF_STR.print_red(f"ЗАФИКСИРОВАНО {len(self.error_messages)} ОШИБОК")
+            UNF_STRING.print_red(f"ЗАФИКСИРОВАНО {len(self.error_messages)} ОШИБОК")
             for index, each_error_message in enumerate(self.error_messages):
                 if index>5:
                     print(f"  -и другие ... ")
                     break
-                UNF_STR.print_red(f"  - в том числе ошибка: {each_error_message.text}")
+                UNF_STRING.print_red(f"  - в том числе ошибка: {each_error_message.text}")
         else:
-            UNF_STR.print_green(f"ИТОГО: ОШИБОК НЕ ЗАФИКСИРОВАНО")
+            UNF_STRING.print_green(f"ИТОГО: ОШИБОК НЕ ЗАФИКСИРОВАНО")
 
     def show_uploaded_groups(self):
         if len(self.requested_groups_dict)>len(self.uploaded_groups_dict):
             deviation = len(self.requested_groups_dict) - len(self.uploaded_groups_dict)
-            UNF_STR.print_fuksi(f"ИТОГО: Загружены лишь {len(self.uploaded_groups_dict)} из {len(self.requested_groups_dict)} ПОТЕРЯНО ({deviation} шт) БЫЛИ ПРОПУЩЕНЫ :")
+            UNF_STRING.print_fuksi(f"ИТОГО: Загружены лишь {len(self.uploaded_groups_dict)} из {len(self.requested_groups_dict)} ПОТЕРЯНО ({deviation} шт) БЫЛИ ПРОПУЩЕНЫ :")
             number = 0
             for each_requested_group in enumerate(self.requested_groups_dict):
                 if each_requested_group not in self.uploaded_groups_dict:
@@ -237,14 +240,14 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
                     print(f"  - в том числе не загружена {number} группа  {each_requested_group}" )
         elif len(self.requested_groups_dict)<len(self.uploaded_groups_dict):
             deviation = len(self.requested_groups_dict) - len(self.uploaded_groups_dict)
-            UNF_STR.print_red(f"ИТОГО: НОНСЕНС ЗАГРУЖЕНО {len(self.uploaded_groups_dict)} (НА {deviation} ГРУПП БОЛЬШЕ) ИЗ {len(self.uploaded_groups_dict)} ЗАПРОШЕНЫХ ")
+            UNF_STRING.print_red(f"ИТОГО: НОНСЕНС ЗАГРУЖЕНО {len(self.uploaded_groups_dict)} (НА {deviation} ГРУПП БОЛЬШЕ) ИЗ {len(self.uploaded_groups_dict)} ЗАПРОШЕНЫХ ")
         else:
-            UNF_STR.print_green(f"ИТОГО: ЗАГРУЖЕНЫ ВСЕ {len(self.requested_groups_dict)} ГРУППЫ ТОВАРОВ")
+            UNF_STRING.print_green(f"ИТОГО: ЗАГРУЖЕНЫ ВСЕ {len(self.requested_groups_dict)} ГРУППЫ ТОВАРОВ")
 
     def show_uploaded_groups_paginations(self):
         if len(self.requested_groups_paginations)>len(self.uploaded_groups_paginations):
             deviation = len(self.requested_groups_paginations) - len(self.uploaded_groups_paginations)
-            UNF_STR.print_fuksi(f"ИТОГО: ЗАГРУЖЕНО ЛИШЬ {len(self.uploaded_groups_paginations)} PAGINATION PAGES ИЗ {len(self.requested_groups_paginations)} ПОТЕРЯНО {deviation} шт) :")
+            UNF_STRING.print_fuksi(f"ИТОГО: ЗАГРУЖЕНО ЛИШЬ {len(self.uploaded_groups_paginations)} PAGINATION PAGES ИЗ {len(self.requested_groups_paginations)} ПОТЕРЯНО {deviation} шт) :")
             number = 0
             for each_requested_group_pagination in enumerate(self.requested_groups_paginations):
                 if each_requested_group_pagination not in self.uploaded_groups_dict:
@@ -255,15 +258,15 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
                     print(f"  - в том числе не загружена {number} group pagination   {each_requested_group_pagination}")
         elif len(self.requested_groups_paginations)<len(self.uploaded_groups_paginations):
             deviation = len(self.requested_groups_paginations) - len(self.uploaded_groups_paginations)
-            UNF_STR.print_red(f"ИТОГО: НОНСЕНС ЗАГРУЖЕНО НА {deviation} GROUP PAGINATION БОЛЬШЕ ЧЕМ ЗАПРОШЕНО")
-            UNF_STR.print_red(f"ИТОГО: НОНСЕНС ЗАГРУЖЕНО {len(self.uploaded_groups_paginations)} PAGINATIONS PAGE (НА {deviation}  БОЛЬШЕ) ИЗ {len(self.uploaded_groups_paginations)} ЗАПРОШЕНЫХ ")
+            UNF_STRING.print_red(f"ИТОГО: НОНСЕНС ЗАГРУЖЕНО НА {deviation} GROUP PAGINATION БОЛЬШЕ ЧЕМ ЗАПРОШЕНО")
+            UNF_STRING.print_red(f"ИТОГО: НОНСЕНС ЗАГРУЖЕНО {len(self.uploaded_groups_paginations)} PAGINATIONS PAGE (НА {deviation}  БОЛЬШЕ) ИЗ {len(self.uploaded_groups_paginations)} ЗАПРОШЕНЫХ ")
         else:
-            UNF_STR.print_green(f"ИТОГО: ЗАГРУЖЕНЫ ВСЕ {len(self.requested_groups_paginations)} GROUP PAGINATION ")
+            UNF_STRING.print_green(f"ИТОГО: ЗАГРУЖЕНЫ ВСЕ {len(self.requested_groups_paginations)} GROUP PAGINATION ")
 
     def show_uploaded_products(self):
         if len(self.requested_products_dict)>len(self.uploaded_products_dict):
             deviation = len(self.requested_products_dict) - len(self.uploaded_products_dict)
-            UNF_STR.print_fuksi(f"ИТОГО: ИЗ ТОВАРОВ ЗАГРУЖЕНО ЛИШЬ {len(self.uploaded_products_dict)} ИЗ {len(self.requested_products_dict)} ПОТЕРЯНО {deviation} шт")
+            UNF_STRING.print_fuksi(f"ИТОГО: ИЗ ТОВАРОВ ЗАГРУЖЕНО ЛИШЬ {len(self.uploaded_products_dict)} ИЗ {len(self.requested_products_dict)} ПОТЕРЯНО {deviation} шт")
             number = 0
             for each_requested_product in self.requested_products_dict:
                 if each_requested_product not in self.uploaded_products_dict:
@@ -274,30 +277,30 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
                     print(f"  - в том числе не загружен товар {number}  " + each_requested_product)
         elif len(self.requested_products_dict)<len(self.uploaded_products_dict):
             deviation = len(self.requested_products_dict) - len(self.uploaded_products_dict)
-            UNF_STR.print_fuksi(f"ИТОГО: ИЗ ТОВАРОВ ЗАГРУЖЕНО ЧРЕЗМЕРНО МНОГО {len(self.uploaded_products_dict)} ИЗ {len(self.requested_products_dict)} ЛИШНИХ {deviation} шт")
+            UNF_STRING.print_fuksi(f"ИТОГО: ИЗ ТОВАРОВ ЗАГРУЖЕНО ЧРЕЗМЕРНО МНОГО {len(self.uploaded_products_dict)} ИЗ {len(self.requested_products_dict)} ЛИШНИХ {deviation} шт")
         else:
-            UNF_STR.print_green(f"ИТОГО: ЗАГРУЖЕНЫ ВСЕ {len(self.requested_products_dict)} ТОВАРОВ")
+            UNF_STRING.print_green(f"ИТОГО: ЗАГРУЖЕНЫ ВСЕ {len(self.requested_products_dict)} ТОВАРОВ")
 
     def show_uploaded_images(self):
         # покажем сколько загружено новых картинок
         if self.add_settings.need_to_upload_images:
-            UNF_STR.print_green(f"ИТОГО: ЗАГРУЖЕНО {len(self.uploaded_images)} НОВЫХ КАРТИНОК")
+            UNF_STRING.print_green(f"ИТОГО: ЗАГРУЖЕНО {len(self.uploaded_images)} НОВЫХ КАРТИНОК")
         else:
-            UNF_STR.print_fuksi(f"ИТОГО: ЗАГРУЗКА КАРТИНОК ОТКЛЮЧЕНА")
+            UNF_STRING.print_fuksi(f"ИТОГО: ЗАГРУЗКА КАРТИНОК ОТКЛЮЧЕНА")
 
         if self.add_settings.stop_after_number_of_groups != None and self.add_settings.stop_after_number_of_groups >0:
-            UNF_STR.print_fuksi(f"(!!!) установлено ограничение количества загружаемых групп {self.add_settings.stop_after_number_of_groups}")
+            UNF_STRING.print_fuksi(f"(!!!) установлено ограничение количества загружаемых групп {self.add_settings.stop_after_number_of_groups}")
 
         if self.add_settings.stop_after_number_of_products_on_page != None and self.add_settings.stop_after_number_of_products_on_page >0:
-            UNF_STR.print_fuksi(f"(!!!) )установлено ограничение количества загружаемых товаров {self.add_settings.stop_after_number_of_products_on_page}")
+            UNF_STRING.print_fuksi(f"(!!!) )установлено ограничение количества загружаемых товаров {self.add_settings.stop_after_number_of_products_on_page}")
 
         if len(self.failed_upload_urls_dict)>0:
-            UNF_STR.print_fuksi(f"ИТОГО: не удалось неудачная загрузка у {len(self.failed_upload_urls_dict)} страниц ")
+            UNF_STRING.print_fuksi(f"ИТОГО: не удалось неудачная загрузка у {len(self.failed_upload_urls_dict)} страниц ")
 
     def show_uploaded_products(self):
         if len(self.requested_products_dict)>len(self.uploaded_products_dict):
             deviation = len(self.requested_products_dict) - len(self.uploaded_products_dict)
-            UNF_STR.print_fuksi(f"ИТОГО: ИЗ ТОВАРОВ ЗАГРУЖЕНО ЛИШЬ {len(self.uploaded_products_dict)} ИЗ {len(self.requested_products_dict)} ПОТЕРЯНО {deviation} шт")
+            UNF_STRING.print_fuksi(f"ИТОГО: ИЗ ТОВАРОВ ЗАГРУЖЕНО ЛИШЬ {len(self.uploaded_products_dict)} ИЗ {len(self.requested_products_dict)} ПОТЕРЯНО {deviation} шт")
             number = 0
             for each_requested_product in self.requested_products_dict:
                 if each_requested_product not in self.uploaded_products_dict:
@@ -308,9 +311,9 @@ class Universal_Spider(scrapy.Spider, Spider_addition):
                     print(f"  - в том числе не загружен товар {number}  " + each_requested_product)
         elif len(self.requested_products_dict)<len(self.uploaded_products_dict):
             deviation = len(self.requested_products_dict) - len(self.uploaded_products_dict)
-            UNF_STR.print_fuksi(f"ИТОГО: ИЗ ТОВАРОВ ЗАГРУЖЕНО ЧРЕЗМЕРНО МНОГО {len(self.uploaded_products_dict)} ИЗ {len(self.requested_products_dict)} ЛИШНИХ {deviation} шт")
+            UNF_STRING.print_fuksi(f"ИТОГО: ИЗ ТОВАРОВ ЗАГРУЖЕНО ЧРЕЗМЕРНО МНОГО {len(self.uploaded_products_dict)} ИЗ {len(self.requested_products_dict)} ЛИШНИХ {deviation} шт")
         else:
-            UNF_STR.print_green(f"ИТОГО: ЗАГРУЖЕНЫ ВСЕ {len(self.requested_products_dict)} ТОВАРОВ")
+            UNF_STRING.print_green(f"ИТОГО: ЗАГРУЖЕНЫ ВСЕ {len(self.requested_products_dict)} ТОВАРОВ")
 
 
 

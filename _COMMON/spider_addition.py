@@ -8,6 +8,7 @@ import sys
 sys.path.insert(0, "l:\\_Важное\\6 Работа\\Python\\PyCharm\\UNF_Project\\")
 import UNF_STRING
 import UNF_SELENIUM
+import UNF_URL
 from _COMMON.add_settings import Add_spider_settings, CustomEncoder
 import urllib3
 
@@ -21,10 +22,9 @@ from sys import path as sys_path #im naming it as pylib so that we won't get con
 # sys_path += [os.path.abspath('../../')] # подключаем каталог выше запущенного корневого скрипта scrapy на уровень
 sys_path += [os.path.abspath('../')] # подключаем каталог выше запущенного корневого скрипта scrapy на уровень
 #print(f"подключаю папку: {os.path.abspath('../')}")
-from _UNF import OS as UNF_OS
-from _UNF import String as UNF_STR
+import UNF_OS
+import UNF_STRING
 
-import UNF_URL
 from scrapy.http import FormRequest, HtmlResponse
 
 
@@ -65,6 +65,9 @@ class Spider_addition():
     finish_time: None
     duration: None
 
+    parse_products_after_all_groups_upload = True
+    product_stack = {}
+
 
     def init_addition(self, settings_file):
 
@@ -74,16 +77,16 @@ class Spider_addition():
         kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
 
         if settings_file == None:
-            UNF_STR.print_fuksi(f"!!!!!!!!!!!!!!!!!!!!! НЕОБХОДИМО УКАЗАТЬ ПАРАМЕТР -a setting_file=name_of_setting_file.json")
-            UNF_STR.print_fuksi(f"для запуска используйте такую строку:\n"
+            UNF_STRING.print_fuksi(f"!!!!!!!!!!!!!!!!!!!!! НЕОБХОДИМО УКАЗАТЬ ПАРАМЕТР -a setting_file=name_of_setting_file.json")
+            UNF_STRING.print_fuksi(f"для запуска используйте такую строку:\n"
                 + "scrapy crawl Universal_spider --loglevel WARNING -a settings_file=---settings_centrsantehniki_com.json")
-            UNF_STR.print_fuksi(f"!!!!!!!!!!!!!!!!!!!!! СПИСОК ЗАГРУЖАЕМЫХ РЕСУРСОВ ОЧИЩАЮ")
+            UNF_STRING.print_fuksi(f"!!!!!!!!!!!!!!!!!!!!! СПИСОК ЗАГРУЖАЕМЫХ РЕСУРСОВ ОЧИЩАЮ")
             self.start_urls = []
             return
         elif not os.path.exists(settings_file):
 
-            UNF_STR.print_fuksi(f"!!!!!!!!!!!!!!!!!!!!! ----ВНИМАНИЕ, НЕ НАЙДЕН ФАЙЛ НАСТРОЕК {settings_file} ---- !!!!!!!!!!!!!!!!!!!!!")
-            UNF_STR.print_fuksi(f"!!!!!!!!!!!!!!!!!!!!! ----СПИСОК ЗАГРУЖАЕМЫХ РЕСУРСОВ ОЧИЩАЮ")
+            UNF_STRING.print_fuksi(f"!!!!!!!!!!!!!!!!!!!!! ----ВНИМАНИЕ, НЕ НАЙДЕН ФАЙЛ НАСТРОЕК {settings_file} ---- !!!!!!!!!!!!!!!!!!!!!")
+            UNF_STRING.print_fuksi(f"!!!!!!!!!!!!!!!!!!!!! ----СПИСОК ЗАГРУЖАЕМЫХ РЕСУРСОВ ОЧИЩАЮ")
             self.start_urls = []
             return
 
@@ -106,10 +109,10 @@ class Spider_addition():
         # self.settings.set('ROBOTSTXT_OBEY', False) #не взлетит
 
         if self.add_settings.stop_after_number_of_groups != None and self.add_settings.stop_after_number_of_groups >0:
-            UNF_STR.print_fuksi(f"   - установлено ограничение количества загружаемых групп {self.add_settings.stop_after_number_of_groups}")
+            UNF_STRING.print_fuksi(f"   - установлено ограничение количества загружаемых групп {self.add_settings.stop_after_number_of_groups}")
 
         if self.add_settings.stop_after_number_of_products_on_page != None and self.add_settings.stop_after_number_of_products_on_page >0:
-            UNF_STR.print_fuksi(f"   - установлено ограничение количества загружаемых товаров {self.add_settings.stop_after_number_of_products_on_page}")
+            UNF_STRING.print_fuksi(f"   - установлено ограничение количества загружаемых товаров {self.add_settings.stop_after_number_of_products_on_page}")
 
         print(f"   - данные выгружаются в каталог: {self.add_settings.result_catalog}")
 
@@ -123,10 +126,10 @@ class Spider_addition():
 
     def RaiseErrorMessage(self, text, url=None, desctiption=None):
         show_text = f"ОШИБКА:"
-        show_text = "" + UNF_STR.decor_red() + show_text + UNF_STR.decor_default()
+        show_text = "" + UNF_STRING.decor_red() + show_text + UNF_STRING.decor_default()
 
 
-        show_text = show_text + UNF_STR.decor_bold() + f" {text}" + UNF_STR.decor_default()
+        show_text = show_text + UNF_STRING.decor_bold() + f" {text}" + UNF_STRING.decor_default()
 
         if url:
             show_text = show_text + f"  {url}"
@@ -140,7 +143,7 @@ class Spider_addition():
 
     def debug_print(self, text):
         if self.add_settings.show_debug_messages:
-            UNF_STR.print_green(text)
+            UNF_STRING.print_green(text)
 
     def clear_old_output_files(self):
         # удалим ранее созданные файцы
@@ -156,7 +159,7 @@ class Spider_addition():
         for file_item in file_list:
             if file_item.endswith(".json") or file_item.endswith(".xml"):
                 file_path = os.path.join(self.add_settings.get_result_files_path(), file_item)
-                #UNF_STR.print_fuksi(f"      - finded old result file to clear: {file_path}")
+                #UNF_STRING.print_fuksi(f"      - finded old result file to clear: {file_path}")
                 UNF_OS.clear_text_file(file_path)
 
 
@@ -171,13 +174,13 @@ class Spider_addition():
     def delete_progress_file(self):
         path_to_progress_file = os.path.join(self.add_settings.get_result_files_path(), self.get_progress_file_name())
         if os.path.exists(path_to_progress_file):
-            #UNF_STR.print_fuksi(f"удаляю старый файл {path_tu_summary}")
+            #UNF_STRING.print_fuksi(f"удаляю старый файл {path_tu_summary}")
             os.remove(path_to_progress_file)
 
     def delete_summary_file(self):
         path_to_summary = os.path.join(self.add_settings.get_result_files_path(), self.get_summary_file_name())
         if os.path.exists(path_to_summary):
-            #UNF_STR.print_fuksi(f"удаляю старый файл {path_to_summary}")
+            #UNF_STRING.print_fuksi(f"удаляю старый файл {path_to_summary}")
             os.remove(path_to_summary)
 
     def save_progress_file(self):
@@ -224,7 +227,7 @@ class Spider_addition():
 
         with open(img_abs_path, 'wb') as image_file:
             image_file.write(content)
-            #UNF_STR.print_fuksi(f"записал " + img_abs_path)
+            #UNF_STRING.print_fuksi(f"записал " + img_abs_path)
 
         self.uploaded_images[img_full_url] = img_full_url
 
@@ -265,7 +268,7 @@ class Spider_addition():
         # webbrowser.open(file_path, new=0) ##new=2 Для новой вкладки
 
         if self.success_autorization(response):
-            UNF_STR.print_green(f"   - успешно авторизовался")
+            UNF_STRING.print_green(f"   - успешно авторизовался")
         else:
             self.RaiseErrorMessage("Неудачная попытка авторизации")
 
@@ -294,13 +297,13 @@ class Spider_addition():
 
     def upload_url_by_request_object(self, url):
         if self.alternative_sesion == None:
-            # UNF_STR.print_fuksi(f"   - создаю новую alternative_sesion")
+            # UNF_STRING.print_fuksi(f"   - создаю новую alternative_sesion")
             self.alternative_sesion = requests.Session()
             self.alternative_sesion.headers.update(
                 {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0'})
 
             if self.add_settings.login_required:
-                # UNF_STR.print_fuksi("   вижу потребность авторизоваться ")
+                # UNF_STRING.print_fuksi("   вижу потребность авторизоваться ")
                 self.login()
 
         session = self.alternative_sesion
@@ -312,30 +315,30 @@ class Spider_addition():
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
         # if "santehnika-online.ru" in url:
-        #     UNF_STR.print_fuksi(f"---session.headers.host={session.geaders.host}")
+        #     UNF_STRING.print_fuksi(f"---session.headers.host={session.geaders.host}")
 
         try:
             response = session.get(url, data=data, verify=verify_ssl)
         except requests.exceptions.HTTPError:
             response = None
-            UNF_STR.print_fuksi(f"Ошибка загрузки HTTPError url={url}")
+            UNF_STRING.print_fuksi(f"Ошибка загрузки HTTPError url={url}")
         except requests.exceptions.ConnectionError:
             response = None
-            UNF_STR.print_fuksi(f"Ошибка загрузки ConnectionError url={url}")
+            UNF_STRING.print_fuksi(f"Ошибка загрузки ConnectionError url={url}")
         except requests.exceptions.Timeout:
             response = None
-            UNF_STR.print_fuksi(f"Ошибка загрузки Timeout url={url}")
+            UNF_STRING.print_fuksi(f"Ошибка загрузки Timeout url={url}")
         except requests.exceptions.RequestException:
             response = None
-            UNF_STR.print_fuksi(f"Ошибка загрузки прочие RequestException url={url}")
+            UNF_STRING.print_fuksi(f"Ошибка загрузки прочие RequestException url={url}")
         finally:
             if response == None:
-                UNF_STR.print_fuksi(f"неудачная попытка загрузки {url}")
+                UNF_STRING.print_fuksi(f"неудачная попытка загрузки {url}")
             elif response.status_code != 200:
                 self.failed_upload_urls_dict[response.url] = response.status_code
-                UNF_STR.print_fuksi(f"загрузка страницы вернула плохой код ответа {response.status_code}  url={url}")
+                UNF_STRING.print_fuksi(f"загрузка страницы вернула плохой код ответа {response.status_code}  url={url}")
             else:
-                # UNF_STR.print_yellow(f"      - страница успешно альтернативно загружана  url={url}")
+                # UNF_STRING.print_yellow(f"      - страница успешно альтернативно загружана  url={url}")
                 pass
 
         response.encoding = 'utf-8'
@@ -346,10 +349,10 @@ class Spider_addition():
     def alternative_upload_page(self, url):
 
         if UNF_URL.URL_is_HTML_page(url) and self.add_settings.use_selenium:
-            #UNF_STR.print_fuksi(f"USING SELENIUM FOR URL={url}")
+            #UNF_STRING.print_fuksi(f"USING SELENIUM FOR URL={url}")
             body_html = self.upload_page_by_selenium(url)
         else:
-            #UNF_STR.print_fuksi(f"USING REQUEST FOR URL={url}")
+            #UNF_STRING.print_fuksi(f"USING REQUEST FOR URL={url}")
             request_response = self.upload_url_by_request_object(url)
             body_html = request_response.text
 
@@ -359,11 +362,11 @@ class Spider_addition():
     # ----------------------------------------------------------------------------------------------------------------------------------------------
     # ----------------------------------------------------------------------------------------------------------------------------------------------
     def remove_background_prefix(self, img_url):
-        if UNF_STR.is_empty(img_url):
+        if UNF_STRING.is_empty(img_url):
             return("")
 
         parts = img_url.partition("background-image: url(")
-        if not UNF_STR.is_empty(parts[1]):
+        if not UNF_STRING.is_empty(parts[1]):
             new_img_url=parts[2]
             new_img_url=new_img_url[0:-1]
         else:
@@ -418,16 +421,16 @@ class Spider_addition():
         auth_words = "?authorize=yes"
         deauth_words = "?logout=yes"
 
-        #UNF_STR.print_fuksi(f"пробую авторизоваться")
+        #UNF_STRING.print_fuksi(f"пробую авторизоваться")
 
         if auth_words in response.text:
             # file_name = "auth_page.txt"
             # UNF_OS.Save_text_to_file(file_name, self.add_settings.get_saved_pages_path(), response.text)
-            # UNF_STR.print_red(f"нашел auth_words={auth_words} в тексте ответа")
+            # UNF_STRING.print_red(f"нашел auth_words={auth_words} в тексте ответа")
             #self.RaiseErrorMessage(f"авторизация неудачна, потому как нашел текст auth_words={auth_words}")
             result_success = False
         elif deauth_words in response.text:
-            #UNF_STR.print_green(f"авторизация успешна, нашел текст deauth_words={deauth_words}")
+            #UNF_STRING.print_green(f"авторизация успешна, нашел текст deauth_words={deauth_words}")
             result_success = True
         else:
             result_success = False
@@ -477,14 +480,14 @@ def save_default_params_file():
 
 def Get_text_by_xpath(selector, xpath):
 
-    if UNF_STR.is_empty(xpath):
+    if UNF_STRING.is_empty(xpath):
         result = ""
     else:
         result = selector.xpath(xpath).extract_first()
 
     if result == None: result = ""
 
-    result = UNF_STR.remove_spec_chars(result)
+    result = UNF_STRING.remove_spec_chars(result)
 
 
 

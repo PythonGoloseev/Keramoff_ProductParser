@@ -1,9 +1,0 @@
-
-from sys import path as sys_path #im naming it as pylib so that we won't get confused between os.path and sys.path
-import os
-sys_path += [os.path.abspath('../')] # подключаем каталог выше запущенного корневого скрипта scrapy на уровень
-
-from _COMMON.spider_addition import Spider_addition
-
-№для работы констекстной подсказки - разместите пустой файл __init__.py в каталоге _COMMON
-

@@ -1,4 +1,0 @@
-
-
-    def __init__(self, product_list_item):
-        super().__init__()
